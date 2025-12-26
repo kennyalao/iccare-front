@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README_INTEGRATION.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="position-grid---backend-integration-guide">Position Grid - Backend Integration Guide</h1>
+<h2 id="overview">Overview</h2>
+<p>This application provides a complete sample registration system with visual position grid selection for the iCCaRE biospecimen management platform.</p>
+<h2 id="features">Features</h2>
+<p>✅ <strong>Interactive Position Grid</strong></p>
+<ul>
+<li>Visual grid display with real-time occupancy status</li>
+<li>Occupied positions are disabled (gray)</li>
+<li>Available positions are clickable (white with blue hover)</li>
+<li>Automatic grid refresh after sample registration</li>
+</ul>
+<p>✅ <strong>Sample Registration Form</strong></p>
+<ul>
+<li>Complete form with validation</li>
+<li>Real-time error handling</li>
+<li>Success/failure feedback</li>
+<li>Auto-reset after successful submission</li>
+</ul>
+<p>✅ <strong>Backend Integration</strong></p>
+<ul>
+<li>RESTful API communication</li>
+<li>JWT authentication</li>
+<li>Automatic position index calculation</li>
+<li>Storage location hierarchy (Site → Freezer → Rack → Box → Position)</li>
+</ul>
+<hr>
+<h2 id="project-structure">Project Structure</h2>
+<pre class="hljs"><code><div>position_grid/
+├── src/
+│   ├── components/
+│   │   ├── PositionGrid.vue       # Grid UI component
+│   │   └── StoreSample.vue        # Alternative implementation example
+│   ├── composables/
+│   │   └── useBoxOccupancy.js     # Occupancy data fetching
+│   ├── services/
+│   │   └── api.js                 # Backend API service
+│   └── App.vue                     # Main application with form
+</div></code></pre>
+<hr>
+<h2 id="api-endpoints-used">API Endpoints Used</h2>
+<h3 id="1-get-box-occupancy-read">1. Get Box Occupancy (Read)</h3>
+<pre class="hljs"><code><div>GET /biospecimen/attributes/boxes/{box_id}/occupancy
+Authorization: Bearer &lt;token&gt;
+
+Response:
+{
+  &quot;box_id&quot;: &quot;BOX_001&quot;,
+  &quot;box_name&quot;: &quot;Storage Box 1&quot;,
+  &quot;template&quot;: {
+    &quot;rows&quot;: 10,
+    &quot;columns&quot;: 10,
+    &quot;total_positions&quot;: 100
+  },
+  &quot;occupancy&quot;: [1, 0, 1, 0, ...],  // Array of 0/1
+  &quot;positions&quot;: [&quot;A1&quot;, &quot;A2&quot;, ...],   // Position labels
+  &quot;occupied_positions&quot;: {
+    &quot;A1&quot;: &quot;sample-uuid-123&quot;
+  },
+  &quot;statistics&quot;: {
+    &quot;occupied&quot;: 23,
+    &quot;available&quot;: 77
+  }
+}
+</div></code></pre>
+<h3 id="2-register-sample-create">2. Register Sample (Create)</h3>
+<pre class="hljs"><code><div>POST /biospecimen/samples/
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+
+Payload:
+{
+  &quot;site_id&quot;: &quot;SITE01&quot;,
+  &quot;sample_category_id&quot;: &quot;CAT_BLOOD&quot;,
+  &quot;sample_serial_no&quot;: &quot;SMPL-2025-001&quot;,
+  &quot;sample_label&quot;: &quot;Blood Sample - Patient A&quot;,
+  &quot;storage_location&quot;: {
+    &quot;site&quot;: &quot;SITE01&quot;,
+    &quot;freezer&quot;: &quot;FRZ01&quot;,
+    &quot;rack&quot;: &quot;RACK01&quot;,
+    &quot;box&quot;: &quot;BOX_001&quot;,
+    &quot;position&quot;: 5  // Calculated index (not label)
+  },
+  &quot;collection_date&quot;: &quot;2025-12-26&quot;,
+  &quot;collection_time&quot;: &quot;14:30:00&quot;,
+  &quot;researcher_info&quot;: &quot;Dr. Smith - Lab A&quot;,
+  &quot;field_collector_info&quot;: &quot;Jane Doe - Station 3&quot;,
+  &quot;free_fields&quot;: {}
+}
+
+Response (201 Created):
+{
+  &quot;uuid&quot;: &quot;550e8400-e29b-41d4-a716-446655440000&quot;,
+  &quot;sample_serial_no&quot;: &quot;SMPL-2025-001&quot;,
+  ...
+}
+</div></code></pre>
+<hr>
+<h2 id="position-index-calculation">Position Index Calculation</h2>
+<p>The backend expects a <strong>numeric index</strong> for positions, not the label (e.g., &quot;A5&quot;).</p>
+<h3 id="formula">Formula</h3>
+<p>For position label <code>&quot;A5&quot;</code> in a 10-column grid:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Extract row and column</span>
+<span class="hljs-keyword">const</span> rowChar = <span class="hljs-string">"A"</span>           <span class="hljs-comment">// First character</span>
+<span class="hljs-keyword">const</span> colNumber = <span class="hljs-number">5</span>           <span class="hljs-comment">// Remaining digits</span>
+
+<span class="hljs-comment">// Convert to zero-based indices</span>
+<span class="hljs-keyword">const</span> rowIndex = rowChar.charCodeAt(<span class="hljs-number">0</span>) - <span class="hljs-number">65</span>  <span class="hljs-comment">// A=0, B=1, C=2...</span>
+<span class="hljs-keyword">const</span> colIndex = colNumber - <span class="hljs-number">1</span>                <span class="hljs-comment">// 1-indexed → 0-indexed</span>
+
+<span class="hljs-comment">// Calculate flat index</span>
+<span class="hljs-keyword">const</span> positionIndex = (rowIndex * columns) + colIndex
+<span class="hljs-comment">// A5 → (0 * 10) + 4 = 4</span>
+</div></code></pre>
+<h3 id="implementation">Implementation</h3>
+<p>See <code>App.vue:34-39</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> getPositionIndex = <span class="hljs-function">(<span class="hljs-params">positionLabel, cols</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> rowChar = positionLabel.charAt(<span class="hljs-number">0</span>)
+  <span class="hljs-keyword">const</span> colNumber = <span class="hljs-built_in">parseInt</span>(positionLabel.slice(<span class="hljs-number">1</span>), <span class="hljs-number">10</span>)
+  <span class="hljs-keyword">const</span> rowIndex = rowChar.charCodeAt(<span class="hljs-number">0</span>) - <span class="hljs-number">65</span>
+  <span class="hljs-keyword">return</span> (rowIndex * cols) + (colIndex)
+}
+</div></code></pre>
+<hr>
+<h2 id="authentication">Authentication</h2>
+<p>The API uses <strong>JWT Bearer tokens</strong>. Store the token in <code>localStorage</code>:</p>
+<pre class="hljs"><code><div>localStorage.setItem(<span class="hljs-string">'access_token'</span>, <span class="hljs-string">'your-jwt-token'</span>)
+</div></code></pre>
+<p>The API service automatically includes it in headers:</p>
+<pre class="hljs"><code><div>Authorization: Bearer ${localStorage.getItem(<span class="hljs-string">'access_token'</span>)}
+</div></code></pre>
+<hr>
+<h2 id="how-to-use">How to Use</h2>
+<h3 id="1-set-authentication-token">1. Set Authentication Token</h3>
+<p>Before using the app, set your JWT token:</p>
+<pre class="hljs"><code><div>localStorage.setItem(<span class="hljs-string">'access_token'</span>, <span class="hljs-string">'your-actual-jwt-token'</span>)
+</div></code></pre>
+<h3 id="2-configure-storage-ids">2. Configure Storage IDs</h3>
+<p>Update <code>App.vue:10-12</code> with your actual IDs:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> siteId = ref(<span class="hljs-string">'SITE01'</span>)     <span class="hljs-comment">// Your site ID</span>
+<span class="hljs-keyword">const</span> freezerId = ref(<span class="hljs-string">'FRZ01'</span>)   <span class="hljs-comment">// Your freezer ID</span>
+<span class="hljs-keyword">const</span> rackId = ref(<span class="hljs-string">'RACK01'</span>)     <span class="hljs-comment">// Your rack ID</span>
+<span class="hljs-keyword">const</span> boxId = ref(<span class="hljs-string">'BOX_001'</span>)     <span class="hljs-comment">// Your box ID</span>
+</div></code></pre>
+<h3 id="3-run-the-application">3. Run the Application</h3>
+<pre class="hljs"><code><div>npm install
+npm run dev
+</div></code></pre>
+<h3 id="4-register-a-sample">4. Register a Sample</h3>
+<ol>
+<li>Grid loads automatically with current occupancy</li>
+<li>Click an available (white) position</li>
+<li>Fill in sample information form</li>
+<li>Click &quot;Register Sample&quot;</li>
+<li>On success:
+<ul>
+<li>Grid refreshes automatically</li>
+<li>Form resets</li>
+<li>Success message appears for 3 seconds</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="common-errors">Common Errors</h3>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Position is not available</code></td>
+<td>Position already occupied</td>
+<td>Grid may be stale - refresh page</td>
+</tr>
+<tr>
+<td><code>HTTP 401</code></td>
+<td>Missing or invalid token</td>
+<td>Check <code>localStorage.getItem('access_token')</code></td>
+</tr>
+<tr>
+<td><code>HTTP 400</code></td>
+<td>Validation error</td>
+<td>Check payload matches backend schema</td>
+</tr>
+<tr>
+<td><code>Sample serial number already exists</code></td>
+<td>Duplicate serial number</td>
+<td>Use unique serial number</td>
+</tr>
+</tbody>
+</table>
+<h3 id="error-display">Error Display</h3>
+<p>Errors are shown in a red alert box above the submit button (<a href="src/App.vue#L254-L259">App.vue:254-259</a>).</p>
+<hr>
+<h2 id="customization">Customization</h2>
+<h3 id="change-grid-box">Change Grid Box</h3>
+<p>Update the <code>boxId</code> ref in <a href="src/App.vue#L8">App.vue:8</a>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> boxId = ref(<span class="hljs-string">'BOX_002'</span>)  <span class="hljs-comment">// Different box</span>
+</div></code></pre>
+<h3 id="add-custom-fields">Add Custom Fields</h3>
+<p>Extend <code>free_fields</code> in <a href="src/App.vue#L90">App.vue:90</a>:</p>
+<pre class="hljs"><code><div>free_fields: {
+  <span class="hljs-attr">patient_id</span>: <span class="hljs-string">'12345'</span>,
+  <span class="hljs-attr">study_arm</span>: <span class="hljs-string">'Control'</span>
+}
+</div></code></pre>
+<h3 id="change-sample-categories">Change Sample Categories</h3>
+<p>Update options in <a href="src/App.vue#L192-L197">App.vue:192-197</a>:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"CAT_CUSTOM"</span>&gt;</span>Custom Type<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+</div></code></pre>
+<hr>
+<h2 id="component-api">Component API</h2>
+<h3 id="positiongrid-component">PositionGrid Component</h3>
+<p><strong>Props:</strong></p>
+<ul>
+<li><code>boxId</code> (String, required) - The box ID to display</li>
+</ul>
+<p><strong>Events:</strong></p>
+<ul>
+<li><code>@select(position)</code> - Emits when user clicks available position
+<ul>
+<li><code>position</code>: String (e.g., &quot;A5&quot;, &quot;B12&quot;)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Usage:</strong></p>
+<pre class="hljs"><code><div>&lt;PositionGrid
+  :boxId=&quot;boxId&quot;
+  @select=&quot;handleSelect&quot;
+/&gt;
+</div></code></pre>
+<h3 id="useboxoccupancy-composable">useBoxOccupancy Composable</h3>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>boxIdRef</code> (Ref<string>) - Reactive box ID reference</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">loading</span>: Ref&lt;boolean&gt;,
+  <span class="hljs-attr">error</span>: Ref&lt;string | <span class="hljs-literal">null</span>&gt;,
+  <span class="hljs-attr">rows</span>: Ref&lt;number&gt;,
+  <span class="hljs-attr">columns</span>: Ref&lt;number&gt;,
+  <span class="hljs-attr">occupancy</span>: Ref&lt;number[]&gt;,
+  <span class="hljs-attr">positions</span>: Ref&lt;string[]&gt;,
+  <span class="hljs-attr">occupiedPositions</span>: Ref&lt;object&gt;,
+  <span class="hljs-attr">gridRows</span>: ComputedRef&lt;string[][]&gt;,
+  <span class="hljs-attr">reload</span>: <span class="hljs-built_in">Function</span>
+}
+</div></code></pre>
+<p><strong>Usage:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> { reload, columns, gridRows } = useBoxOccupancy(boxId)
+</div></code></pre>
+<hr>
+<h2 id="development">Development</h2>
+<h3 id="run-dev-server">Run Dev Server</h3>
+<pre class="hljs"><code><div>npm run dev
+</div></code></pre>
+<h3 id="build-for-production">Build for Production</h3>
+<pre class="hljs"><code><div>npm run build
+</div></code></pre>
+<h3 id="preview-production-build">Preview Production Build</h3>
+<pre class="hljs"><code><div>npm run preview
+</div></code></pre>
+<hr>
+<h2 id="testing">Testing</h2>
+<h3 id="manual-testing-checklist">Manual Testing Checklist</h3>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0">Grid loads with correct occupancy</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">Occupied positions are disabled (gray)</label></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2">Available positions are clickable (white)</label></li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3">Clicking position updates &quot;Selected Position&quot;</label></li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4">Form validation prevents empty submission</label></li>
+<li><input type="checkbox" id="checkbox5"><label for="checkbox5">Submit button disabled when form incomplete</label></li>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6">Error messages display correctly</label></li>
+<li><input type="checkbox" id="checkbox7"><label for="checkbox7">Success message shows after registration</label></li>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8">Grid refreshes after successful registration</label></li>
+<li><input type="checkbox" id="checkbox9"><label for="checkbox9">Form resets after successful registration</label></li>
+<li><input type="checkbox" id="checkbox10"><label for="checkbox10">Newly registered position becomes occupied</label></li>
+</ul>
+<h3 id="api-testing">API Testing</h3>
+<p>Use <code>curl</code> or Postman to test endpoints independently:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Get occupancy</span>
+curl -H <span class="hljs-string">"Authorization: Bearer YOUR_TOKEN"</span> \
+  https://iccare.desmarttrader.com/biospecimen/attributes/boxes/BOX_001/occupancy
+
+<span class="hljs-comment"># Register sample</span>
+curl -X POST \
+  -H <span class="hljs-string">"Authorization: Bearer YOUR_TOKEN"</span> \
+  -H <span class="hljs-string">"Content-Type: application/json"</span> \
+  -d <span class="hljs-string">'{...}'</span> \
+  https://iccare.desmarttrader.com/biospecimen/samples/
+</div></code></pre>
+<hr>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="grid-not-loading">Grid not loading</h3>
+<ul>
+<li>Check browser console for errors</li>
+<li>Verify JWT token is set</li>
+<li>Check network tab for API response</li>
+<li>Verify box ID exists in backend</li>
+</ul>
+<h3 id="position-index-mismatch">Position index mismatch</h3>
+<ul>
+<li>Ensure column count matches backend template</li>
+<li>Check <code>getPositionIndex</code> calculation</li>
+<li>Backend uses 0-based indexing</li>
+</ul>
+<h3 id="cors-errors">CORS errors</h3>
+<ul>
+<li>Backend must allow frontend origin</li>
+<li>Check CORS headers in API response</li>
+</ul>
+<h3 id="occupied-position-clickable">Occupied position clickable</h3>
+<ul>
+<li>Grid occupancy may be stale</li>
+<li>Call <code>reload()</code> to refresh</li>
+<li>Check backend storage validation</li>
+</ul>
+<hr>
+<h2 id="api-service-reference">API Service Reference</h2>
+<p>See <a href="src/services/api.js">src/services/api.js</a> for all available functions:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> {
+  registerSample,
+  getBoxOccupancy,
+  getSites,
+  getFreezers,
+  getRacks,
+  getBoxes,
+  getSampleCategories
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'@/services/api'</span>
+</div></code></pre>
+<hr>
+<h2 id="license">License</h2>
+<p>Part of the iCCaRE Biospecimen Management System</p>
+<hr>
+<h2 id="support">Support</h2>
+<p>For backend API documentation, see:</p>
+<ul>
+<li><code>C:\workbench\projects\iCCaRE-backend\README.md</code></li>
+<li>API Testing Guide: <code>C:\workbench\projects\iCCaRE-backend\API_TESTING_GUIDE_REMOTE.html</code></li>
+</ul>
+
+</body>
+</html>

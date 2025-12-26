@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>EXAMPLES.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="usage-examples">Usage Examples</h1>
+<h2 id="example-1-basic-sample-registration">Example 1: Basic Sample Registration</h2>
+<h3 id="scenario">Scenario</h3>
+<p>Register a blood sample in position B5 of box BOX_001.</p>
+<h3 id="steps">Steps</h3>
+<ol>
+<li>Set authentication token:</li>
+</ol>
+<pre class="hljs"><code><div>localStorage.setItem(<span class="hljs-string">'access_token'</span>, <span class="hljs-string">'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'</span>)
+</div></code></pre>
+<ol start="2">
+<li>
+<p>Open application (grid loads automatically)</p>
+</li>
+<li>
+<p>Click position <strong>B5</strong> (row B, column 5)</p>
+</li>
+<li>
+<p>Fill form:</p>
+<ul>
+<li>Sample Serial No: <code>BLOOD-2025-001</code></li>
+<li>Sample Label: <code>Blood Sample - Patient 001</code></li>
+<li>Sample Category: <code>Blood</code></li>
+<li>Collection Date: <code>2025-12-26</code></li>
+<li>Collection Time: <code>14:30</code></li>
+<li>Researcher Info: <code>Dr. Jane Smith - Hematology Lab</code></li>
+<li>Field Collector Info: <code>Nurse John Doe - Collection Station 3</code></li>
+</ul>
+</li>
+<li>
+<p>Click &quot;Register Sample&quot;</p>
+</li>
+<li>
+<p>Result:</p>
+<ul>
+<li>Success message appears (green)</li>
+<li>Grid refreshes (B5 turns gray)</li>
+<li>Form resets to defaults</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="example-2-programmatic-registration">Example 2: Programmatic Registration</h2>
+<h3 id="use-case">Use Case</h3>
+<p>Register samples via JavaScript (e.g., batch import, barcode scanner).</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { registerSample } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/services/api'</span>
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">registerFromBarcode</span>(<span class="hljs-params">barcodeData</span>) </span>{
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> sample = <span class="hljs-keyword">await</span> registerSample({
+      <span class="hljs-attr">site_id</span>: <span class="hljs-string">'SITE01'</span>,
+      <span class="hljs-attr">sample_category_id</span>: <span class="hljs-string">'CAT_BLOOD'</span>,
+      <span class="hljs-attr">sample_serial_no</span>: barcodeData.serialNo,
+      <span class="hljs-attr">sample_label</span>: barcodeData.label,
+      <span class="hljs-attr">storage_location</span>: {
+        <span class="hljs-attr">site</span>: <span class="hljs-string">'SITE01'</span>,
+        <span class="hljs-attr">freezer</span>: <span class="hljs-string">'FRZ01'</span>,
+        <span class="hljs-attr">rack</span>: <span class="hljs-string">'RACK01'</span>,
+        <span class="hljs-attr">box</span>: <span class="hljs-string">'BOX_001'</span>,
+        <span class="hljs-attr">position</span>: <span class="hljs-number">42</span>  <span class="hljs-comment">// Pre-calculated position index</span>
+      },
+      <span class="hljs-attr">collection_date</span>: barcodeData.collectionDate,
+      <span class="hljs-attr">collection_time</span>: <span class="hljs-literal">null</span>,
+      <span class="hljs-attr">researcher_info</span>: <span class="hljs-string">'Dr. Smith'</span>,
+      <span class="hljs-attr">field_collector_info</span>: <span class="hljs-string">'Auto-scanner Station 1'</span>,
+      <span class="hljs-attr">free_fields</span>: {
+        <span class="hljs-attr">barcode</span>: barcodeData.barcode,
+        <span class="hljs-attr">batch_id</span>: barcodeData.batchId
+      }
+    })
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Registered:'</span>, sample.uuid)
+    <span class="hljs-keyword">return</span> sample
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Registration failed:'</span>, error.message)
+    <span class="hljs-keyword">throw</span> error
+  }
+}
+
+<span class="hljs-comment">// Usage</span>
+registerFromBarcode({
+  <span class="hljs-attr">serialNo</span>: <span class="hljs-string">'SCAN-001'</span>,
+  <span class="hljs-attr">label</span>: <span class="hljs-string">'Blood Sample'</span>,
+  <span class="hljs-attr">collectionDate</span>: <span class="hljs-string">'2025-12-26'</span>,
+  <span class="hljs-attr">barcode</span>: <span class="hljs-string">'1234567890'</span>,
+  <span class="hljs-attr">batchId</span>: <span class="hljs-string">'BATCH-001'</span>
+})
+</div></code></pre>
+<hr>
+<h2 id="example-3-batch-registration">Example 3: Batch Registration</h2>
+<h3 id="use-case">Use Case</h3>
+<p>Register multiple samples at once (e.g., CSV import).</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { registerSample } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/services/api'</span>
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">batchRegisterSamples</span>(<span class="hljs-params">samples</span>) </span>{
+  <span class="hljs-keyword">const</span> results = []
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> sample <span class="hljs-keyword">of</span> samples) {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> registerSample({
+        <span class="hljs-attr">site_id</span>: sample.site_id,
+        <span class="hljs-attr">sample_category_id</span>: sample.category_id,
+        <span class="hljs-attr">sample_serial_no</span>: sample.serial_no,
+        <span class="hljs-attr">sample_label</span>: sample.label,
+        <span class="hljs-attr">storage_location</span>: {
+          <span class="hljs-attr">site</span>: sample.site_id,
+          <span class="hljs-attr">freezer</span>: sample.freezer_id,
+          <span class="hljs-attr">rack</span>: sample.rack_id,
+          <span class="hljs-attr">box</span>: sample.box_id,
+          <span class="hljs-attr">position</span>: sample.position_index
+        },
+        <span class="hljs-attr">collection_date</span>: sample.collection_date,
+        <span class="hljs-attr">collection_time</span>: sample.collection_time,
+        <span class="hljs-attr">researcher_info</span>: sample.researcher,
+        <span class="hljs-attr">field_collector_info</span>: sample.collector,
+        <span class="hljs-attr">free_fields</span>: sample.metadata || {}
+      })
+
+      results.push({ <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">sample</span>: result })
+    } <span class="hljs-keyword">catch</span> (error) {
+      results.push({
+        <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">error</span>: error.message,
+        <span class="hljs-attr">serial_no</span>: sample.serial_no
+      })
+    }
+  }
+
+  <span class="hljs-keyword">return</span> results
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-keyword">const</span> samplesFromCSV = [
+  {
+    <span class="hljs-attr">serial_no</span>: <span class="hljs-string">'CSV-001'</span>,
+    <span class="hljs-attr">label</span>: <span class="hljs-string">'Sample 1'</span>,
+    <span class="hljs-attr">category_id</span>: <span class="hljs-string">'CAT_BLOOD'</span>,
+    <span class="hljs-attr">site_id</span>: <span class="hljs-string">'SITE01'</span>,
+    <span class="hljs-attr">freezer_id</span>: <span class="hljs-string">'FRZ01'</span>,
+    <span class="hljs-attr">rack_id</span>: <span class="hljs-string">'RACK01'</span>,
+    <span class="hljs-attr">box_id</span>: <span class="hljs-string">'BOX_001'</span>,
+    <span class="hljs-attr">position_index</span>: <span class="hljs-number">0</span>,  <span class="hljs-comment">// A1</span>
+    <span class="hljs-attr">collection_date</span>: <span class="hljs-string">'2025-12-26'</span>,
+    <span class="hljs-attr">collection_time</span>: <span class="hljs-string">'09:00:00'</span>,
+    <span class="hljs-attr">researcher</span>: <span class="hljs-string">'Dr. Smith'</span>,
+    <span class="hljs-attr">collector</span>: <span class="hljs-string">'Nurse Doe'</span>
+  },
+  {
+    <span class="hljs-attr">serial_no</span>: <span class="hljs-string">'CSV-002'</span>,
+    <span class="hljs-attr">label</span>: <span class="hljs-string">'Sample 2'</span>,
+    <span class="hljs-attr">category_id</span>: <span class="hljs-string">'CAT_URINE'</span>,
+    <span class="hljs-attr">site_id</span>: <span class="hljs-string">'SITE01'</span>,
+    <span class="hljs-attr">freezer_id</span>: <span class="hljs-string">'FRZ01'</span>,
+    <span class="hljs-attr">rack_id</span>: <span class="hljs-string">'RACK01'</span>,
+    <span class="hljs-attr">box_id</span>: <span class="hljs-string">'BOX_001'</span>,
+    <span class="hljs-attr">position_index</span>: <span class="hljs-number">1</span>,  <span class="hljs-comment">// A2</span>
+    <span class="hljs-attr">collection_date</span>: <span class="hljs-string">'2025-12-26'</span>,
+    <span class="hljs-attr">collection_time</span>: <span class="hljs-string">'09:15:00'</span>,
+    <span class="hljs-attr">researcher</span>: <span class="hljs-string">'Dr. Smith'</span>,
+    <span class="hljs-attr">collector</span>: <span class="hljs-string">'Nurse Doe'</span>
+  }
+]
+
+<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> batchRegisterSamples(samplesFromCSV)
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Success:'</span>, results.filter(<span class="hljs-function"><span class="hljs-params">r</span> =&gt;</span> r.success).length)
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed:'</span>, results.filter(<span class="hljs-function"><span class="hljs-params">r</span> =&gt;</span> !r.success).length)
+</div></code></pre>
+<hr>
+<h2 id="example-4-custom-position-grid-component">Example 4: Custom Position Grid Component</h2>
+<h3 id="use-case">Use Case</h3>
+<p>Create a read-only position grid for viewing box occupancy.</p>
+<pre class="hljs"><code><div>&lt;script setup&gt;
+import { toRef } from 'vue'
+import { useBoxOccupancy } from '@/composables/useBoxOccupancy'
+
+const props = defineProps({
+  boxId: String
+})
+
+const { loading, gridRows, occupancy, columns, occupiedPositions } =
+  useBoxOccupancy(toRef(props, 'boxId'))
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div class=&quot;occupancy-viewer&quot;&gt;
+    &lt;h3&gt;Box {{ boxId }} Occupancy&lt;/h3&gt;
+
+    &lt;div v-if=&quot;loading&quot;&gt;Loading...&lt;/div&gt;
+
+    &lt;div v-else class=&quot;grid-display&quot;&gt;
+      &lt;div v-for=&quot;(row, rIdx) in gridRows&quot; :key=&quot;rIdx&quot; class=&quot;row&quot;&gt;
+        &lt;div
+          v-for=&quot;(pos, cIdx) in row&quot;
+          :key=&quot;pos&quot;
+          :class=&quot;['cell', { occupied: occupancy[rIdx * columns + cIdx] === 1 }]&quot;
+          :title=&quot;occupiedPositions[pos] ? `Sample: ${occupiedPositions[pos]}` : 'Available'&quot;
+        &gt;
+          {{ pos }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;style scoped&gt;
+.grid-display {
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cell.occupied {
+  background: #e0e0e0;
+  color: #666;
+}
+&lt;/style&gt;
+</div></code></pre>
+<p><strong>Usage:</strong></p>
+<pre class="hljs"><code><div>&lt;OccupancyViewer boxId=&quot;BOX_001&quot; /&gt;
+</div></code></pre>
+<hr>
+<h2 id="example-5-multi-box-registration-workflow">Example 5: Multi-Box Registration Workflow</h2>
+<h3 id="use-case">Use Case</h3>
+<p>Allow users to select box dynamically before choosing position.</p>
+<pre class="hljs"><code><div>&lt;script setup&gt;
+import { ref, watch } from 'vue'
+import PositionGrid from '@/components/PositionGrid.vue'
+import { getBoxes } from '@/services/api'
+
+const rackId = ref('RACK01')
+const selectedBox = ref(null)
+const selectedPosition = ref(null)
+const boxes = ref([])
+
+// Fetch boxes for selected rack
+watch(rackId, async (newRackId) =&gt; {
+  const response = await getBoxes(newRackId)
+  boxes.value = response.boxes
+  selectedBox.value = null
+  selectedPosition.value = null
+})
+
+// Load initial boxes
+getBoxes(rackId.value).then(res =&gt; boxes.value = res.boxes)
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div class=&quot;multi-box-workflow&quot;&gt;
+    &lt;!-- Step 1: Select Box --&gt;
+    &lt;div class=&quot;step&quot;&gt;
+      &lt;h3&gt;Step 1: Select Box&lt;/h3&gt;
+      &lt;select v-model=&quot;selectedBox&quot;&gt;
+        &lt;option :value=&quot;null&quot;&gt;-- Select a box --&lt;/option&gt;
+        &lt;option v-for=&quot;box in boxes&quot; :key=&quot;box.box_id&quot; :value=&quot;box.box_id&quot;&gt;
+          {{ box.box_name }} ({{ box.box_id }})
+        &lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Step 2: Select Position --&gt;
+    &lt;div v-if=&quot;selectedBox&quot; class=&quot;step&quot;&gt;
+      &lt;h3&gt;Step 2: Select Position&lt;/h3&gt;
+      &lt;PositionGrid
+        :boxId=&quot;selectedBox&quot;
+        @select=&quot;selectedPosition = $event&quot;
+      /&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Step 3: Show Selection --&gt;
+    &lt;div v-if=&quot;selectedPosition&quot; class=&quot;step&quot;&gt;
+      &lt;h3&gt;Step 3: Confirm&lt;/h3&gt;
+      &lt;p&gt;Box: &lt;strong&gt;{{ selectedBox }}&lt;/strong&gt;&lt;/p&gt;
+      &lt;p&gt;Position: &lt;strong&gt;{{ selectedPosition }}&lt;/strong&gt;&lt;/p&gt;
+      &lt;button @click=&quot;submitSample&quot;&gt;Register Sample&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</div></code></pre>
+<hr>
+<h2 id="example-6-position-validation-before-form">Example 6: Position Validation Before Form</h2>
+<h3 id="use-case">Use Case</h3>
+<p>Prevent users from filling form until valid position is selected.</p>
+<pre class="hljs"><code><div>&lt;script setup&gt;
+import { ref, computed } from 'vue'
+import PositionGrid from '@/components/PositionGrid.vue'
+
+const selectedPosition = ref(null)
+const formData = ref({
+  serialNo: '',
+  label: ''
+})
+
+const canShowForm = computed(() =&gt; selectedPosition.value !== null)
+const canSubmit = computed(() =&gt;
+  canShowForm.value &amp;&amp;
+  formData.value.serialNo &amp;&amp;
+  formData.value.label
+)
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;!-- Always show grid --&gt;
+    &lt;PositionGrid boxId=&quot;BOX_001&quot; @select=&quot;selectedPosition = $event&quot; /&gt;
+
+    &lt;!-- Only show form after position selected --&gt;
+    &lt;div v-if=&quot;!canShowForm&quot; class=&quot;warning&quot;&gt;
+      ⚠️ Please select a position first
+    &lt;/div&gt;
+
+    &lt;form v-else @submit.prevent=&quot;submitSample&quot;&gt;
+      &lt;h3&gt;Position {{ selectedPosition }} Selected&lt;/h3&gt;
+
+      &lt;input v-model=&quot;formData.serialNo&quot; placeholder=&quot;Serial Number&quot; required /&gt;
+      &lt;input v-model=&quot;formData.label&quot; placeholder=&quot;Label&quot; required /&gt;
+
+      &lt;button :disabled=&quot;!canSubmit&quot;&gt;Register Sample&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</div></code></pre>
+<hr>
+<h2 id="example-7-position-auto-selection-next-available">Example 7: Position Auto-Selection (Next Available)</h2>
+<h3 id="use-case">Use Case</h3>
+<p>Automatically select the next available position.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { ref } <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span>
+<span class="hljs-keyword">import</span> { useBoxOccupancy } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/composables/useBoxOccupancy'</span>
+
+<span class="hljs-keyword">const</span> boxId = ref(<span class="hljs-string">'BOX_001'</span>)
+<span class="hljs-keyword">const</span> { positions, occupancy } = useBoxOccupancy(boxId)
+
+<span class="hljs-comment">// Find next available position</span>
+<span class="hljs-keyword">const</span> getNextAvailablePosition = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; occupancy.value.length; i++) {
+    <span class="hljs-keyword">if</span> (occupancy.value[i] === <span class="hljs-number">0</span>) {
+      <span class="hljs-keyword">return</span> positions.value[i]  <span class="hljs-comment">// e.g., "A1", "A2", etc.</span>
+    }
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>  <span class="hljs-comment">// Box is full</span>
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-keyword">const</span> nextPos = getNextAvailablePosition()
+<span class="hljs-keyword">if</span> (nextPos) {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Next available:'</span>, nextPos)
+} <span class="hljs-keyword">else</span> {
+  alert(<span class="hljs-string">'Box is full!'</span>)
+}
+</div></code></pre>
+<p><strong>With Component:</strong></p>
+<pre class="hljs"><code><div>&lt;script setup&gt;
+import { ref, watchEffect } from 'vue'
+import { useBoxOccupancy } from '@/composables/useBoxOccupancy'
+
+const boxId = ref('BOX_001')
+const autoPosition = ref(null)
+const { positions, occupancy } = useBoxOccupancy(boxId)
+
+// Auto-select next available whenever occupancy changes
+watchEffect(() =&gt; {
+  for (let i = 0; i &lt; occupancy.value.length; i++) {
+    if (occupancy.value[i] === 0) {
+      autoPosition.value = positions.value[i]
+      return
+    }
+  }
+  autoPosition.value = null
+})
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;div v-if=&quot;autoPosition&quot;&gt;
+      Auto-selected position: &lt;strong&gt;{{ autoPosition }}&lt;/strong&gt;
+      &lt;button @click=&quot;registerAtPosition(autoPosition)&quot;&gt;
+        Register Here
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div v-else class=&quot;error&quot;&gt;
+      ⚠️ Box is full! No available positions.
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</div></code></pre>
+<hr>
+<h2 id="example-8-real-time-occupancy-updates">Example 8: Real-time Occupancy Updates</h2>
+<h3 id="use-case">Use Case</h3>
+<p>Poll for occupancy updates every 30 seconds.</p>
+<pre class="hljs"><code><div>&lt;script setup&gt;
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useBoxOccupancy } from '@/composables/useBoxOccupancy'
+
+const boxId = ref('BOX_001')
+const { reload, statistics } = useBoxOccupancy(boxId)
+
+let intervalId = null
+
+onMounted(() =&gt; {
+  // Refresh every 30 seconds
+  intervalId = setInterval(() =&gt; {
+    reload()
+    console.log('Refreshed occupancy')
+  }, 30000)
+})
+
+onUnmounted(() =&gt; {
+  if (intervalId) {
+    clearInterval(intervalId)
+  }
+})
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;h3&gt;Live Occupancy Monitor&lt;/h3&gt;
+    &lt;p&gt;Occupied: {{ statistics.occupied }} / {{ statistics.total_positions }}&lt;/p&gt;
+    &lt;p&gt;Utilization: {{ statistics.utilization_percentage }}%&lt;/p&gt;
+    &lt;button @click=&quot;reload&quot;&gt;Refresh Now&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</div></code></pre>
+<hr>
+<h2 id="example-9-error-recovery">Example 9: Error Recovery</h2>
+<h3 id="use-case">Use Case</h3>
+<p>Handle common errors gracefully.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { registerSample } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/services/api'</span>
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">registerWithRetry</span>(<span class="hljs-params">payload, maxRetries = <span class="hljs-number">3</span></span>) </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> attempt = <span class="hljs-number">1</span>; attempt &lt;= maxRetries; attempt++) {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> registerSample(payload)
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">data</span>: result }
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-keyword">const</span> errorMsg = error.message.toLowerCase()
+
+      <span class="hljs-comment">// Position occupied - don't retry</span>
+      <span class="hljs-keyword">if</span> (errorMsg.includes(<span class="hljs-string">'not available'</span>) || errorMsg.includes(<span class="hljs-string">'occupied'</span>)) {
+        <span class="hljs-keyword">return</span> {
+          <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>,
+          <span class="hljs-attr">error</span>: <span class="hljs-string">'Position already occupied'</span>,
+          <span class="hljs-attr">retryable</span>: <span class="hljs-literal">false</span>
+        }
+      }
+
+      <span class="hljs-comment">// Duplicate serial number - don't retry</span>
+      <span class="hljs-keyword">if</span> (errorMsg.includes(<span class="hljs-string">'already exists'</span>)) {
+        <span class="hljs-keyword">return</span> {
+          <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>,
+          <span class="hljs-attr">error</span>: <span class="hljs-string">'Serial number already exists'</span>,
+          <span class="hljs-attr">retryable</span>: <span class="hljs-literal">false</span>
+        }
+      }
+
+      <span class="hljs-comment">// Network error - retry</span>
+      <span class="hljs-keyword">if</span> (errorMsg.includes(<span class="hljs-string">'failed to fetch'</span>) || errorMsg.includes(<span class="hljs-string">'network'</span>)) {
+        <span class="hljs-keyword">if</span> (attempt &lt; maxRetries) {
+          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Network error, retrying (<span class="hljs-subst">${attempt}</span>/<span class="hljs-subst">${maxRetries}</span>)...`</span>)
+          <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> setTimeout(resolve, <span class="hljs-number">1000</span> * attempt))
+          <span class="hljs-keyword">continue</span>
+        }
+      }
+
+      <span class="hljs-comment">// Other errors</span>
+      <span class="hljs-keyword">return</span> {
+        <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">error</span>: error.message,
+        <span class="hljs-attr">retryable</span>: <span class="hljs-literal">true</span>
+      }
+    }
+  }
+
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">error</span>: <span class="hljs-string">'Max retries exceeded'</span>,
+    <span class="hljs-attr">retryable</span>: <span class="hljs-literal">false</span>
+  }
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> registerWithRetry(payload)
+<span class="hljs-keyword">if</span> (!result.success) {
+  <span class="hljs-keyword">if</span> (result.retryable) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Retryable error:'</span>, result.error)
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Permanent error:'</span>, result.error)
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="example-10-custom-metadata-fields">Example 10: Custom Metadata Fields</h2>
+<h3 id="use-case">Use Case</h3>
+<p>Add study-specific metadata to samples.</p>
+<pre class="hljs"><code><div>&lt;script setup&gt;
+import { ref } from 'vue'
+import { registerSample } from '@/services/api'
+
+const metadata = ref({
+  patientId: '',
+  studyArm: 'Control',
+  visitNumber: 1,
+  timepoint: 'Baseline',
+  processedBy: 'Lab Tech A',
+  storageTemp: '-80C',
+  notes: ''
+})
+
+const submitWithMetadata = async () =&gt; {
+  await registerSample({
+    // ... standard fields ...
+    free_fields: {
+      patient_id: metadata.value.patientId,
+      study_arm: metadata.value.studyArm,
+      visit_number: metadata.value.visitNumber,
+      timepoint: metadata.value.timepoint,
+      processed_by: metadata.value.processedBy,
+      storage_temperature: metadata.value.storageTemp,
+      notes: metadata.value.notes
+    }
+  })
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;form @submit.prevent=&quot;submitWithMetadata&quot;&gt;
+    &lt;h3&gt;Study Metadata&lt;/h3&gt;
+
+    &lt;input v-model=&quot;metadata.patientId&quot; placeholder=&quot;Patient ID&quot; required /&gt;
+
+    &lt;select v-model=&quot;metadata.studyArm&quot;&gt;
+      &lt;option value=&quot;Control&quot;&gt;Control&lt;/option&gt;
+      &lt;option value=&quot;Treatment A&quot;&gt;Treatment A&lt;/option&gt;
+      &lt;option value=&quot;Treatment B&quot;&gt;Treatment B&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;input v-model.number=&quot;metadata.visitNumber&quot; type=&quot;number&quot; min=&quot;1&quot; /&gt;
+
+    &lt;select v-model=&quot;metadata.timepoint&quot;&gt;
+      &lt;option value=&quot;Baseline&quot;&gt;Baseline&lt;/option&gt;
+      &lt;option value=&quot;Week 4&quot;&gt;Week 4&lt;/option&gt;
+      &lt;option value=&quot;Week 8&quot;&gt;Week 8&lt;/option&gt;
+      &lt;option value=&quot;Final&quot;&gt;Final&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;textarea v-model=&quot;metadata.notes&quot; placeholder=&quot;Notes&quot;&gt;&lt;/textarea&gt;
+
+    &lt;button type=&quot;submit&quot;&gt;Register Sample&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/template&gt;
+</div></code></pre>
+<hr>
+<h2 id="testing-examples">Testing Examples</h2>
+<h3 id="unit-test-vitest">Unit Test (Vitest)</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { describe, it, expect, vi } <span class="hljs-keyword">from</span> <span class="hljs-string">'vitest'</span>
+<span class="hljs-keyword">import</span> { registerSample } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/services/api'</span>
+
+<span class="hljs-comment">// Mock fetch</span>
+global.fetch = vi.fn()
+
+describe(<span class="hljs-string">'registerSample'</span>, () =&gt; {
+  it(<span class="hljs-string">'should register sample successfully'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> mockResponse = {
+      <span class="hljs-attr">uuid</span>: <span class="hljs-string">'test-uuid'</span>,
+      <span class="hljs-attr">sample_serial_no</span>: <span class="hljs-string">'TEST-001'</span>
+    }
+
+    fetch.mockResolvedValueOnce({
+      <span class="hljs-attr">ok</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">json</span>: <span class="hljs-keyword">async</span> () =&gt; mockResponse
+    })
+
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> registerSample({
+      <span class="hljs-attr">sample_serial_no</span>: <span class="hljs-string">'TEST-001'</span>,
+      <span class="hljs-comment">// ... other fields</span>
+    })
+
+    expect(result.uuid).toBe(<span class="hljs-string">'test-uuid'</span>)
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringContaining(<span class="hljs-string">'/samples/'</span>),
+      expect.objectContaining({
+        <span class="hljs-attr">method</span>: <span class="hljs-string">'POST'</span>
+      })
+    )
+  })
+
+  it(<span class="hljs-string">'should handle errors'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    fetch.mockResolvedValueOnce({
+      <span class="hljs-attr">ok</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">status</span>: <span class="hljs-number">400</span>,
+      <span class="hljs-attr">json</span>: <span class="hljs-keyword">async</span> () =&gt; ({ <span class="hljs-attr">detail</span>: <span class="hljs-string">'Position not available'</span> })
+    })
+
+    <span class="hljs-keyword">await</span> expect(registerSample({})).rejects.toThrow(<span class="hljs-string">'Position not available'</span>)
+  })
+})
+</div></code></pre>
+<hr>
+<p>For more details, see:</p>
+<ul>
+<li><a href="README_INTEGRATION.md">README_INTEGRATION.md</a> - Full documentation</li>
+<li><a href="ARCHITECTURE.md">ARCHITECTURE.md</a> - System architecture</li>
+<li><a href="QUICK_START.md">QUICK_START.md</a> - Getting started</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+# package.json dependencies equivalent
+"dependencies": {
+    "vue": "^3.4.0",
+    "vue-router": "^4.0.0",
+    "axios": "^1.6.0"
+}
