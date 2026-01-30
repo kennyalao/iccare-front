@@ -8,6 +8,18 @@ const props = defineProps({
   boxId: {
     type: String,
     required: true
+  },
+  siteId: {
+    type: String,
+    default: null
+  },
+  freezerId: {
+    type: String,
+    default: null
+  },
+  rackId: {
+    type: String,
+    default: null
   }
 })
 
@@ -20,8 +32,19 @@ const {
   gridRows,
   occupancy,
   columns,
-  occupiedPositions
-} = useBoxOccupancy(toRef(props, 'boxId'))
+  occupiedPositions,
+  reload
+} = useBoxOccupancy(
+  toRef(props, 'boxId'),
+  toRef(props, 'siteId'),
+  toRef(props, 'freezerId'),
+  toRef(props, 'rackId')
+)
+
+// Expose reload method to parent component
+defineExpose({
+  reload
+})
 </script>
 
 

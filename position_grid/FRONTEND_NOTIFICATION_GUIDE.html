@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FRONTEND_NOTIFICATION_GUIDE.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="frontend-implementation-guide-in-app-notifications">Frontend Implementation Guide: In-App Notifications</h1>
+<p><strong>Date:</strong> 2025-12-27
+<strong>Audience:</strong> Frontend Developers
+<strong>Frameworks:</strong> React, Vue
+<strong>Approaches:</strong> REST API Polling, WebSocket</p>
+<hr>
+<h2 id="overview">Overview</h2>
+<p>This guide provides <strong>complete, production-ready code</strong> for implementing in-app notifications in your frontend application. Choose your framework (React or Vue) and approach (REST polling or WebSocket).</p>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#quick-start">Quick Start</a></li>
+<li><a href="#architecture-decision">Architecture Decision</a></li>
+<li><a href="#react-implementation">React Implementation</a>
+<ul>
+<li><a href="#react--rest-polling">React + REST Polling</a></li>
+<li><a href="#react--websocket">React + WebSocket</a></li>
+</ul>
+</li>
+<li><a href="#vue-implementation">Vue Implementation</a>
+<ul>
+<li><a href="#vue--rest-polling">Vue + REST Polling</a></li>
+<li><a href="#vue--websocket">Vue + WebSocket</a></li>
+</ul>
+</li>
+<li><a href="#backend-api-reference">Backend API Reference</a></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ol>
+<hr>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="what-youll-build">What You'll Build</h3>
+<p>A notification bell icon (🔔) in your app's header that:</p>
+<ul>
+<li>Shows unread notification count as a badge</li>
+<li>Opens a dropdown with notification list when clicked</li>
+<li>Marks notifications as read when clicked</li>
+<li>Receives new notifications automatically (polling or real-time)</li>
+<li>Displays browser notifications (optional)</li>
+</ul>
+<h3 id="prerequisites">Prerequisites</h3>
+<p><strong>Backend Requirements:</strong></p>
+<ul>
+<li>✅ Notification service running at <code>https://iccare.desmarttrader.com/notification</code></li>
+<li>✅ Authentication token (JWT) available in your app</li>
+</ul>
+<p><strong>Frontend Dependencies:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"axios"</span>: <span class="hljs-string">"^1.6.0"</span>,           <span class="hljs-comment">// For HTTP requests (both React &amp; Vue)</span>
+  <span class="hljs-attr">"react"</span>: <span class="hljs-string">"^18.0.0"</span>,          <span class="hljs-comment">// For React implementation</span>
+  <span class="hljs-attr">"vue"</span>: <span class="hljs-string">"^3.3.0"</span>              <span class="hljs-comment">// For Vue implementation</span>
+}
+</div></code></pre>
+<hr>
+<h2 id="architecture-decision">Architecture Decision</h2>
+<h3 id="choose-your-approach">Choose Your Approach</h3>
+<table>
+<thead>
+<tr>
+<th>Criteria</th>
+<th>REST Polling ⚡</th>
+<th>WebSocket 🚀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Best For</strong></td>
+<td>Simple apps, low notification frequency</td>
+<td>Real-time apps, high notification frequency</td>
+</tr>
+<tr>
+<td><strong>Latency</strong></td>
+<td>10-30 seconds</td>
+<td>&lt; 1 second</td>
+</tr>
+<tr>
+<td><strong>Complexity</strong></td>
+<td>Low (⭐⭐⭐)</td>
+<td>Medium (⭐⭐)</td>
+</tr>
+<tr>
+<td><strong>Server Load</strong></td>
+<td>Higher (repeated requests)</td>
+<td>Lower (persistent connection)</td>
+</tr>
+<tr>
+<td><strong>Firewall Issues</strong></td>
+<td>None</td>
+<td>Possible (needs WebSocket support)</td>
+</tr>
+<tr>
+<td><strong>Mobile Battery</strong></td>
+<td>Higher consumption</td>
+<td>Lower consumption</td>
+</tr>
+<tr>
+<td><strong>Implementation Time</strong></td>
+<td>30 minutes</td>
+<td>1-2 hours</td>
+</tr>
+</tbody>
+</table>
+<p><strong>💡 Recommendation:</strong> Start with <strong>REST Polling</strong> for quick implementation. Upgrade to <strong>WebSocket</strong> later if you need real-time delivery.</p>
+<h3 id="architecture-diagrams">Architecture Diagrams</h3>
+<p><strong>REST Polling:</strong></p>
+<pre class="hljs"><code><div>┌──────────┐     Every 15s      ┌──────────┐
+│          │ ───────────────&gt;   │          │
+│ Frontend │ GET /notification/ │ Backend  │
+│          │ &lt;─────────────────  │          │
+└──────────┘   Returns list     └──────────┘
+</div></code></pre>
+<p><strong>WebSocket:</strong></p>
+<pre class="hljs"><code><div>┌──────────┐                    ┌──────────┐
+│          │ &lt;═══════════════&gt;  │          │
+│ Frontend │  Persistent WS     │ Backend  │
+│          │  Connection        │          │
+└──────────┘  (bidirectional)   └──────────┘
+</div></code></pre>
+<hr>
+<h2 id="react-implementation">React Implementation</h2>
+<h3 id="react--rest-polling">React + REST Polling</h3>
+<p>Perfect for most applications. Checks for new notifications every 15 seconds.</p>
+<h4 id="step-1-create-the-hook">Step 1: Create the Hook</h4>
+<p><strong>File:</strong> <code>src/hooks/useNotifications.js</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { useState, useEffect, useCallback } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span>;
+
+<span class="hljs-keyword">const</span> API_BASE_URL = <span class="hljs-string">'https://iccare.desmarttrader.com/notification'</span>;
+<span class="hljs-keyword">const</span> POLLING_INTERVAL = <span class="hljs-number">15000</span>; <span class="hljs-comment">// 15 seconds</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> useNotifications = <span class="hljs-function">(<span class="hljs-params">token</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> [notifications, setNotifications] = useState([]);
+  <span class="hljs-keyword">const</span> [unreadCount, setUnreadCount] = useState(<span class="hljs-number">0</span>);
+  <span class="hljs-keyword">const</span> [loading, setLoading] = useState(<span class="hljs-literal">false</span>);
+  <span class="hljs-keyword">const</span> [error, setError] = useState(<span class="hljs-literal">null</span>);
+
+  <span class="hljs-comment">// Fetch notifications from backend</span>
+  <span class="hljs-keyword">const</span> fetchNotifications = useCallback(<span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">if</span> (!token) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">try</span> {
+      setLoading(<span class="hljs-literal">true</span>);
+      <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> axios.get(<span class="hljs-string">`<span class="hljs-subst">${API_BASE_URL}</span>/feed`</span>, {
+        <span class="hljs-attr">headers</span>: { <span class="hljs-attr">Authorization</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">${token}</span>`</span> },
+        <span class="hljs-attr">params</span>: {
+          <span class="hljs-attr">limit</span>: <span class="hljs-number">50</span>,
+          <span class="hljs-attr">unread_only</span>: <span class="hljs-literal">false</span>
+        }
+      });
+
+      setNotifications(response.data);
+      setUnreadCount(response.data.filter(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> !n.read).length);
+      setError(<span class="hljs-literal">null</span>);
+    } <span class="hljs-keyword">catch</span> (err) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to fetch notifications:'</span>, err);
+      setError(err.response?.data?.detail || err.message);
+    } <span class="hljs-keyword">finally</span> {
+      setLoading(<span class="hljs-literal">false</span>);
+    }
+  }, [token]);
+
+  <span class="hljs-comment">// Mark notification as read</span>
+  <span class="hljs-keyword">const</span> markAsRead = useCallback(<span class="hljs-keyword">async</span> (notificationId) =&gt; {
+    <span class="hljs-keyword">if</span> (!token) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">await</span> axios.post(
+        <span class="hljs-string">`<span class="hljs-subst">${API_BASE_URL}</span>/feed/<span class="hljs-subst">${notificationId}</span>/mark-read`</span>,
+        {},
+        { <span class="hljs-attr">headers</span>: { <span class="hljs-attr">Authorization</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">${token}</span>`</span> } }
+      );
+
+      <span class="hljs-comment">// Update local state optimistically</span>
+      setNotifications(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span>
+        prev.map(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span>
+          n.notification_id === notificationId
+            ? { ...n, <span class="hljs-attr">read</span>: <span class="hljs-literal">true</span> }
+            : n
+        )
+      );
+      setUnreadCount(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">0</span>, prev - <span class="hljs-number">1</span>));
+    } <span class="hljs-keyword">catch</span> (err) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to mark as read:'</span>, err);
+    }
+  }, [token]);
+
+  <span class="hljs-comment">// Mark all as read</span>
+  <span class="hljs-keyword">const</span> markAllAsRead = useCallback(<span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> unreadIds = notifications
+      .filter(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> !n.read)
+      .map(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n.notification_id);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> id <span class="hljs-keyword">of</span> unreadIds) {
+      <span class="hljs-keyword">await</span> markAsRead(id);
+    }
+  }, [notifications, markAsRead]);
+
+  <span class="hljs-comment">// Set up polling</span>
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-comment">// Initial fetch</span>
+    fetchNotifications();
+
+    <span class="hljs-comment">// Set up polling interval</span>
+    <span class="hljs-keyword">const</span> intervalId = setInterval(fetchNotifications, POLLING_INTERVAL);
+
+    <span class="hljs-comment">// Cleanup on unmount</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> clearInterval(intervalId);
+  }, [fetchNotifications]);
+
+  <span class="hljs-keyword">return</span> {
+    notifications,
+    unreadCount,
+    loading,
+    error,
+    markAsRead,
+    markAllAsRead,
+    <span class="hljs-attr">refresh</span>: fetchNotifications
+  };
+};
+</div></code></pre>
+<h4 id="step-2-create-the-notification-bell-component">Step 2: Create the Notification Bell Component</h4>
+<p><strong>File:</strong> <code>src/components/NotificationBell.jsx</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> React, { useState, useRef, useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> { useNotifications } <span class="hljs-keyword">from</span> <span class="hljs-string">'../hooks/useNotifications'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./NotificationBell.css'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> NotificationBell = <span class="hljs-function">(<span class="hljs-params">{ token }</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> [isOpen, setIsOpen] = useState(<span class="hljs-literal">false</span>);
+  <span class="hljs-keyword">const</span> dropdownRef = useRef(<span class="hljs-literal">null</span>);
+  <span class="hljs-keyword">const</span> {
+    notifications,
+    unreadCount,
+    loading,
+    error,
+    markAsRead,
+    markAllAsRead
+  } = useNotifications(token);
+
+  <span class="hljs-comment">// Close dropdown when clicking outside</span>
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> handleClickOutside = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (dropdownRef.current &amp;&amp; !dropdownRef.current.contains(event.target)) {
+        setIsOpen(<span class="hljs-literal">false</span>);
+      }
+    };
+
+    <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">'mousedown'</span>, handleClickOutside);
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">document</span>.removeEventListener(<span class="hljs-string">'mousedown'</span>, handleClickOutside);
+  }, []);
+
+  <span class="hljs-keyword">const</span> handleNotificationClick = <span class="hljs-function">(<span class="hljs-params">notification</span>) =&gt;</span> {
+    markAsRead(notification.notification_id);
+
+    <span class="hljs-comment">// Navigate to relevant page if action_url exists</span>
+    <span class="hljs-keyword">if</span> (notification.action_url) {
+      <span class="hljs-built_in">window</span>.location.href = notification.action_url;
+    }
+
+    setIsOpen(<span class="hljs-literal">false</span>);
+  };
+
+  <span class="hljs-keyword">const</span> getPriorityIcon = <span class="hljs-function">(<span class="hljs-params">priority</span>) =&gt;</span> {
+    <span class="hljs-keyword">switch</span> (priority) {
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'urgent'</span>: <span class="hljs-keyword">return</span> <span class="hljs-string">'🚨'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'high'</span>: <span class="hljs-keyword">return</span> <span class="hljs-string">'⚠️'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'normal'</span>: <span class="hljs-keyword">return</span> <span class="hljs-string">'📢'</span>;
+      <span class="hljs-keyword">default</span>: <span class="hljs-keyword">return</span> <span class="hljs-string">'📌'</span>;
+    }
+  };
+
+  <span class="hljs-keyword">const</span> formatTimestamp = <span class="hljs-function">(<span class="hljs-params">timestamp</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(timestamp);
+    <span class="hljs-keyword">const</span> now = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+    <span class="hljs-keyword">const</span> diffMs = now - date;
+    <span class="hljs-keyword">const</span> diffMins = <span class="hljs-built_in">Math</span>.floor(diffMs / <span class="hljs-number">60000</span>);
+
+    <span class="hljs-keyword">if</span> (diffMins &lt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">'Just now'</span>;
+    <span class="hljs-keyword">if</span> (diffMins &lt; <span class="hljs-number">60</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">${diffMins}</span>m ago`</span>;
+    <span class="hljs-keyword">if</span> (diffMins &lt; <span class="hljs-number">1440</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-built_in">Math</span>.floor(diffMins <span class="hljs-regexp">/ 60)}h ago`;
+    return date.toLocaleDateString();
+  };
+
+  return (
+    &lt;div className="notification-bell-container" ref={dropdownRef}&gt;
+      &lt;button
+        className="notification-bell-button"
+        onClick={() =&gt; setIsOpen(!isOpen)}
+        aria-label="Notifications"
+        title="Notifications"
+      &gt;
+        🔔
+        {unreadCount &gt; 0 &amp;&amp; (
+          &lt;span className="notification-badge"&gt;{unreadCount &gt; 99 ? '99+' : unreadCount}&lt;/</span>span&gt;
+        )}</span>
+      &lt;/button&gt;
+
+      {isOpen &amp;&amp; (
+        &lt;div className="notification-dropdown"&gt;
+          &lt;div className="notification-header"&gt;
+            &lt;h3&gt;Notifications&lt;/h3&gt;
+            {unreadCount &gt; 0 &amp;&amp; (
+              &lt;button onClick={markAllAsRead} className="mark-all-read"&gt;
+                Mark all read
+              &lt;/button&gt;
+            )}
+          &lt;/div&gt;
+
+          &lt;div className="notification-list"&gt;
+            {loading &amp;&amp; notifications.length === 0 &amp;&amp; (
+              &lt;div className="notification-loading"&gt;Loading...&lt;/div&gt;
+            )}
+
+            {error &amp;&amp; (
+              &lt;div className="notification-error"&gt;
+                Failed to load notifications: {error}
+              &lt;/div&gt;
+            )}
+
+            {!loading &amp;&amp; notifications.length === 0 &amp;&amp; (
+              &lt;div className="no-notifications"&gt;
+                &lt;span className="no-notifications-icon"&gt;🔕&lt;/span&gt;
+                &lt;p&gt;No notifications&lt;/p&gt;
+              &lt;/div&gt;
+            )}
+
+            {notifications.map((notification) =&gt; (
+              &lt;div
+                key={notification.notification_id}
+                className={`</span>notification-item ${notification.read ? <span class="hljs-string">'read'</span> : <span class="hljs-string">'unread'</span>} priority-${notification.priority}<span class="hljs-string">`}
+                onClick={() =&gt; handleNotificationClick(notification)}
+              &gt;
+                &lt;div className="notification-icon"&gt;
+                  {getPriorityIcon(notification.priority)}
+                &lt;/div&gt;
+                &lt;div className="notification-content"&gt;
+                  &lt;div className="notification-title"&gt;{notification.title}&lt;/div&gt;
+                  &lt;div className="notification-message"&gt;{notification.message}&lt;/div&gt;
+                  &lt;div className="notification-time"&gt;
+                    {formatTimestamp(notification.timestamp)}
+                  &lt;/div&gt;
+                &lt;/div&gt;
+                {!notification.read &amp;&amp; &lt;div className="unread-dot"&gt;&lt;/div&gt;}
+              &lt;/div&gt;
+            ))}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      )}
+    &lt;/div&gt;
+  );
+};
+</span></div></code></pre>
+<h4 id="step-3-add-css-styling">Step 3: Add CSS Styling</h4>
+<p><strong>File:</strong> <code>src/components/NotificationBell.css</code></p>
+<pre class="hljs"><code><div><span class="hljs-comment">/* Container */</span>
+<span class="hljs-selector-class">.notification-bell-container</span> {
+  <span class="hljs-attribute">position</span>: relative;
+  <span class="hljs-attribute">display</span>: inline-block;
+}
+
+<span class="hljs-comment">/* Bell Button */</span>
+<span class="hljs-selector-class">.notification-bell-button</span> {
+  <span class="hljs-attribute">position</span>: relative;
+  <span class="hljs-attribute">background</span>: none;
+  <span class="hljs-attribute">border</span>: none;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">24px</span>;
+  <span class="hljs-attribute">cursor</span>: pointer;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">8px</span> <span class="hljs-number">12px</span>;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">8px</span>;
+  <span class="hljs-attribute">transition</span>: background-color <span class="hljs-number">0.2s</span>;
+}
+
+<span class="hljs-selector-class">.notification-bell-button</span><span class="hljs-selector-pseudo">:hover</span> {
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.05</span>);
+}
+
+<span class="hljs-comment">/* Badge */</span>
+<span class="hljs-selector-class">.notification-badge</span> {
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">top</span>: <span class="hljs-number">4px</span>;
+  <span class="hljs-attribute">right</span>: <span class="hljs-number">4px</span>;
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#ff4444</span>;
+  <span class="hljs-attribute">color</span>: white;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">10px</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">2px</span> <span class="hljs-number">6px</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">11px</span>;
+  <span class="hljs-attribute">font-weight</span>: bold;
+  <span class="hljs-attribute">min-width</span>: <span class="hljs-number">18px</span>;
+  <span class="hljs-attribute">text-align</span>: center;
+}
+
+<span class="hljs-comment">/* Dropdown */</span>
+<span class="hljs-selector-class">.notification-dropdown</span> {
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">right</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">top</span>: <span class="hljs-built_in">calc</span>(<span class="hljs-number">100%</span> + <span class="hljs-number">8px</span>);
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">420px</span>;
+  <span class="hljs-attribute">max-height</span>: <span class="hljs-number">600px</span>;
+  <span class="hljs-attribute">background</span>: white;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#e0e0e0</span>;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">12px</span>;
+  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">8px</span> <span class="hljs-number">24px</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.12</span>);
+  <span class="hljs-attribute">z-index</span>: <span class="hljs-number">1000</span>;
+  <span class="hljs-attribute">overflow</span>: hidden;
+}
+
+<span class="hljs-comment">/* Header */</span>
+<span class="hljs-selector-class">.notification-header</span> {
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">justify-content</span>: space-between;
+  <span class="hljs-attribute">align-items</span>: center;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">16px</span> <span class="hljs-number">20px</span>;
+  <span class="hljs-attribute">border-bottom</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#f0f0f0</span>;
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#fafafa</span>;
+}
+
+<span class="hljs-selector-class">.notification-header</span> <span class="hljs-selector-tag">h3</span> {
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">18px</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">600</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#333</span>;
+}
+
+<span class="hljs-selector-class">.mark-all-read</span> {
+  <span class="hljs-attribute">background</span>: none;
+  <span class="hljs-attribute">border</span>: none;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#007bff</span>;
+  <span class="hljs-attribute">cursor</span>: pointer;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">14px</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">500</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">4px</span> <span class="hljs-number">8px</span>;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4px</span>;
+  <span class="hljs-attribute">transition</span>: background-color <span class="hljs-number">0.2s</span>;
+}
+
+<span class="hljs-selector-class">.mark-all-read</span><span class="hljs-selector-pseudo">:hover</span> {
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">123</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0.1</span>);
+}
+
+<span class="hljs-comment">/* Notification List */</span>
+<span class="hljs-selector-class">.notification-list</span> {
+  <span class="hljs-attribute">max-height</span>: <span class="hljs-number">500px</span>;
+  <span class="hljs-attribute">overflow-y</span>: auto;
+}
+
+<span class="hljs-selector-class">.notification-list</span><span class="hljs-selector-pseudo">::-webkit-scrollbar</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">8px</span>;
+}
+
+<span class="hljs-selector-class">.notification-list</span><span class="hljs-selector-pseudo">::-webkit-scrollbar-track</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#f1f1f1</span>;
+}
+
+<span class="hljs-selector-class">.notification-list</span><span class="hljs-selector-pseudo">::-webkit-scrollbar-thumb</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#ccc</span>;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4px</span>;
+}
+
+<span class="hljs-selector-class">.notification-list</span><span class="hljs-selector-pseudo">::-webkit-scrollbar-thumb</span><span class="hljs-selector-pseudo">:hover</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#999</span>;
+}
+
+<span class="hljs-comment">/* Notification Item */</span>
+<span class="hljs-selector-class">.notification-item</span> {
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">align-items</span>: flex-start;
+  <span class="hljs-attribute">gap</span>: <span class="hljs-number">12px</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">16px</span> <span class="hljs-number">20px</span>;
+  <span class="hljs-attribute">border-bottom</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#f5f5f5</span>;
+  <span class="hljs-attribute">cursor</span>: pointer;
+  <span class="hljs-attribute">transition</span>: background-color <span class="hljs-number">0.2s</span>;
+  <span class="hljs-attribute">position</span>: relative;
+}
+
+<span class="hljs-selector-class">.notification-item</span><span class="hljs-selector-pseudo">:hover</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#f8f9fa</span>;
+}
+
+<span class="hljs-selector-class">.notification-item</span><span class="hljs-selector-pseudo">:last-child</span> {
+  <span class="hljs-attribute">border-bottom</span>: none;
+}
+
+<span class="hljs-selector-class">.notification-item</span><span class="hljs-selector-class">.unread</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#e3f2fd</span>;
+}
+
+<span class="hljs-selector-class">.notification-item</span><span class="hljs-selector-class">.unread</span><span class="hljs-selector-pseudo">:hover</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#d1e7f9</span>;
+}
+
+<span class="hljs-comment">/* Priority Colors */</span>
+<span class="hljs-selector-class">.notification-item</span><span class="hljs-selector-class">.priority-urgent</span> {
+  <span class="hljs-attribute">border-left</span>: <span class="hljs-number">4px</span> solid <span class="hljs-number">#ff0000</span>;
+}
+
+<span class="hljs-selector-class">.notification-item</span><span class="hljs-selector-class">.priority-high</span> {
+  <span class="hljs-attribute">border-left</span>: <span class="hljs-number">4px</span> solid <span class="hljs-number">#ff9800</span>;
+}
+
+<span class="hljs-selector-class">.notification-item</span><span class="hljs-selector-class">.priority-normal</span> {
+  <span class="hljs-attribute">border-left</span>: <span class="hljs-number">4px</span> solid <span class="hljs-number">#2196f3</span>;
+}
+
+<span class="hljs-comment">/* Notification Icon */</span>
+<span class="hljs-selector-class">.notification-icon</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">24px</span>;
+  <span class="hljs-attribute">flex-shrink</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">2px</span>;
+}
+
+<span class="hljs-comment">/* Notification Content */</span>
+<span class="hljs-selector-class">.notification-content</span> {
+  <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;
+  <span class="hljs-attribute">min-width</span>: <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-selector-class">.notification-title</span> {
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">600</span>;
+  <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">4px</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#333</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">14px</span>;
+}
+
+<span class="hljs-selector-class">.notification-message</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">13px</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#666</span>;
+  <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">6px</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">1.4</span>;
+  <span class="hljs-attribute">overflow</span>: hidden;
+  <span class="hljs-attribute">text-overflow</span>: ellipsis;
+  <span class="hljs-attribute">display</span>: -webkit-box;
+  <span class="hljs-attribute">-webkit-line-clamp</span>: <span class="hljs-number">2</span>;
+  <span class="hljs-attribute">-webkit-box-orient</span>: vertical;
+}
+
+<span class="hljs-selector-class">.notification-time</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">12px</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#999</span>;
+}
+
+<span class="hljs-comment">/* Unread Dot */</span>
+<span class="hljs-selector-class">.unread-dot</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">8px</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">8px</span>;
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#007bff</span>;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>;
+  <span class="hljs-attribute">flex-shrink</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">8px</span>;
+}
+
+<span class="hljs-comment">/* Empty State */</span>
+<span class="hljs-selector-class">.no-notifications</span> {
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">60px</span> <span class="hljs-number">20px</span>;
+  <span class="hljs-attribute">text-align</span>: center;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#999</span>;
+}
+
+<span class="hljs-selector-class">.no-notifications-icon</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">48px</span>;
+  <span class="hljs-attribute">display</span>: block;
+  <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">12px</span>;
+}
+
+<span class="hljs-selector-class">.no-notifications</span> <span class="hljs-selector-tag">p</span> {
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">14px</span>;
+}
+
+<span class="hljs-comment">/* Loading State */</span>
+<span class="hljs-selector-class">.notification-loading</span> {
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">40px</span> <span class="hljs-number">20px</span>;
+  <span class="hljs-attribute">text-align</span>: center;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#666</span>;
+}
+
+<span class="hljs-comment">/* Error State */</span>
+<span class="hljs-selector-class">.notification-error</span> {
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">20px</span>;
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#fff3cd</span>;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#ffc107</span>;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4px</span>;
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">12px</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#856404</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">14px</span>;
+}
+
+<span class="hljs-comment">/* Mobile Responsive */</span>
+<span class="hljs-keyword">@media</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">640px</span>) {
+  <span class="hljs-selector-class">.notification-dropdown</span> {
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100vw</span>;
+    <span class="hljs-attribute">max-width</span>: <span class="hljs-number">420px</span>;
+    <span class="hljs-attribute">right</span>: -<span class="hljs-number">20px</span>;
+  }
+}
+</div></code></pre>
+<h4 id="step-4-use-in-your-app">Step 4: Use in Your App</h4>
+<p><strong>File:</strong> <code>src/App.jsx</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> { NotificationBell } <span class="hljs-keyword">from</span> <span class="hljs-string">'./components/NotificationBell'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// Get token from your auth context/state</span>
+  <span class="hljs-keyword">const</span> token = localStorage.getItem(<span class="hljs-string">'access_token'</span>);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"app"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">header</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"app-header"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>iCCaRE System<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">nav</span>&gt;</span>
+          {/* Your navigation items */}
+          <span class="hljs-tag">&lt;<span class="hljs-name">NotificationBell</span> <span class="hljs-attr">token</span>=<span class="hljs-string">{token}</span> /&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">nav</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span>
+      {/* Rest of your app */}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App;
+</div></code></pre>
+<p><strong>✅ React + REST Polling Complete!</strong></p>
+<hr>
+<h3 id="react--websocket">React + WebSocket</h3>
+<p>For real-time notifications with instant delivery.</p>
+<h4 id="step-1-create-websocket-hook">Step 1: Create WebSocket Hook</h4>
+<p><strong>File:</strong> <code>src/hooks/useNotifications.js</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { useState, useEffect, useCallback, useRef } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span>;
+
+<span class="hljs-keyword">const</span> API_BASE_URL = <span class="hljs-string">'https://iccare.desmarttrader.com/notification'</span>;
+<span class="hljs-keyword">const</span> WS_URL = <span class="hljs-string">'wss://iccare.desmarttrader.com/notification/ws'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> useNotifications = <span class="hljs-function">(<span class="hljs-params">token</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> [notifications, setNotifications] = useState([]);
+  <span class="hljs-keyword">const</span> [unreadCount, setUnreadCount] = useState(<span class="hljs-number">0</span>);
+  <span class="hljs-keyword">const</span> [connected, setConnected] = useState(<span class="hljs-literal">false</span>);
+  <span class="hljs-keyword">const</span> wsRef = useRef(<span class="hljs-literal">null</span>);
+  <span class="hljs-keyword">const</span> reconnectTimeoutRef = useRef(<span class="hljs-literal">null</span>);
+
+  <span class="hljs-comment">// Fetch initial notifications from REST API</span>
+  <span class="hljs-keyword">const</span> fetchNotifications = useCallback(<span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">if</span> (!token) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> axios.get(<span class="hljs-string">`<span class="hljs-subst">${API_BASE_URL}</span>/feed`</span>, {
+        <span class="hljs-attr">headers</span>: { <span class="hljs-attr">Authorization</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">${token}</span>`</span> },
+        <span class="hljs-attr">params</span>: { <span class="hljs-attr">limit</span>: <span class="hljs-number">50</span> }
+      });
+
+      setNotifications(response.data);
+      setUnreadCount(response.data.filter(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> !n.read).length);
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to fetch notifications:'</span>, error);
+    }
+  }, [token]);
+
+  <span class="hljs-comment">// Mark notification as read</span>
+  <span class="hljs-keyword">const</span> markAsRead = useCallback(<span class="hljs-keyword">async</span> (notificationId) =&gt; {
+    <span class="hljs-keyword">if</span> (!token) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">await</span> axios.post(
+        <span class="hljs-string">`<span class="hljs-subst">${API_BASE_URL}</span>/feed/<span class="hljs-subst">${notificationId}</span>/mark-read`</span>,
+        {},
+        { <span class="hljs-attr">headers</span>: { <span class="hljs-attr">Authorization</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">${token}</span>`</span> } }
+      );
+
+      setNotifications(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span>
+        prev.map(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span>
+          n.notification_id === notificationId ? { ...n, <span class="hljs-attr">read</span>: <span class="hljs-literal">true</span> } : n
+        )
+      );
+      setUnreadCount(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">0</span>, prev - <span class="hljs-number">1</span>));
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to mark as read:'</span>, error);
+    }
+  }, [token]);
+
+  <span class="hljs-comment">// Mark all as read</span>
+  <span class="hljs-keyword">const</span> markAllAsRead = useCallback(<span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> unreadIds = notifications
+      .filter(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> !n.read)
+      .map(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n.notification_id);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> id <span class="hljs-keyword">of</span> unreadIds) {
+      <span class="hljs-keyword">await</span> markAsRead(id);
+    }
+  }, [notifications, markAsRead]);
+
+  <span class="hljs-comment">// Setup WebSocket connection</span>
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (!token) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">const</span> connectWebSocket = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-keyword">const</span> websocket = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">`<span class="hljs-subst">${WS_URL}</span>?token=<span class="hljs-subst">${token}</span>`</span>);
+
+      websocket.onopen = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'✅ WebSocket connected'</span>);
+        setConnected(<span class="hljs-literal">true</span>);
+      };
+
+      websocket.onmessage = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+        <span class="hljs-keyword">try</span> {
+          <span class="hljs-keyword">const</span> notification = <span class="hljs-built_in">JSON</span>.parse(event.data);
+          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'📬 New notification received:'</span>, notification);
+
+          <span class="hljs-comment">// Add to notifications list at the top</span>
+          setNotifications(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> [notification, ...prev]);
+          setUnreadCount(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> prev + <span class="hljs-number">1</span>);
+
+          <span class="hljs-comment">// Show browser notification</span>
+          <span class="hljs-keyword">if</span> (<span class="hljs-string">'Notification'</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">window</span> &amp;&amp; Notification.permission === <span class="hljs-string">'granted'</span>) {
+            <span class="hljs-keyword">new</span> Notification(notification.title, {
+              <span class="hljs-attr">body</span>: notification.message,
+              <span class="hljs-attr">icon</span>: <span class="hljs-string">'/notification-icon.png'</span>,
+              <span class="hljs-attr">tag</span>: notification.notification_id
+            });
+          }
+
+          <span class="hljs-comment">// Play sound (optional)</span>
+          <span class="hljs-keyword">const</span> audio = <span class="hljs-keyword">new</span> Audio(<span class="hljs-string">'/notification-sound.mp3'</span>);
+          audio.play().catch(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Audio play failed:'</span>, e));
+        } <span class="hljs-keyword">catch</span> (error) {
+          <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to parse notification:'</span>, error);
+        }
+      };
+
+      websocket.onerror = <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'❌ WebSocket error:'</span>, error);
+        setConnected(<span class="hljs-literal">false</span>);
+      };
+
+      websocket.onclose = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'🔌 WebSocket disconnected:'</span>, event.code, event.reason);
+        setConnected(<span class="hljs-literal">false</span>);
+
+        <span class="hljs-comment">// Attempt to reconnect after 5 seconds</span>
+        reconnectTimeoutRef.current = setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'🔄 Attempting to reconnect...'</span>);
+          connectWebSocket();
+        }, <span class="hljs-number">5000</span>);
+      };
+
+      wsRef.current = websocket;
+    };
+
+    <span class="hljs-comment">// Initial fetch</span>
+    fetchNotifications();
+
+    <span class="hljs-comment">// Connect WebSocket</span>
+    connectWebSocket();
+
+    <span class="hljs-comment">// Cleanup</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-keyword">if</span> (wsRef.current &amp;&amp; wsRef.current.readyState === WebSocket.OPEN) {
+        wsRef.current.close();
+      }
+      <span class="hljs-keyword">if</span> (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+      }
+    };
+  }, [token, fetchNotifications]);
+
+  <span class="hljs-keyword">return</span> {
+    notifications,
+    unreadCount,
+    connected,
+    markAsRead,
+    markAllAsRead,
+    <span class="hljs-attr">refresh</span>: fetchNotifications
+  };
+};
+</div></code></pre>
+<h4 id="step-2-request-browser-notification-permission">Step 2: Request Browser Notification Permission</h4>
+<p><strong>File:</strong> <code>src/App.jsx</code> (add this)</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> React, { useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> { NotificationBell } <span class="hljs-keyword">from</span> <span class="hljs-string">'./components/NotificationBell'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> token = localStorage.getItem(<span class="hljs-string">'access_token'</span>);
+
+  <span class="hljs-comment">// Request notification permission on mount</span>
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (<span class="hljs-string">'Notification'</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">window</span> &amp;&amp; Notification.permission === <span class="hljs-string">'default'</span>) {
+      Notification.requestPermission().then(<span class="hljs-function"><span class="hljs-params">permission</span> =&gt;</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Notification permission:'</span>, permission);
+      });
+    }
+  }, []);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"app"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">header</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"app-header"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>iCCaRE System<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">nav</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">NotificationBell</span> <span class="hljs-attr">token</span>=<span class="hljs-string">{token}</span> /&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">nav</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span>
+      {/* Rest of your app */}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App;
+</div></code></pre>
+<h4 id="step-3-update-notificationbell-component">Step 3: Update NotificationBell Component</h4>
+<p>The NotificationBell component is <strong>exactly the same</strong> as the REST version! The hook handles the difference.</p>
+<p><strong>Optional:</strong> Show WebSocket connection status</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// In NotificationBell.jsx, add this to show connection status</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> NotificationBell = <span class="hljs-function">(<span class="hljs-params">{ token }</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> { notifications, unreadCount, connected, markAsRead, markAllAsRead } = useNotifications(token);
+
+  <span class="hljs-comment">// ... rest of component</span>
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"notification-bell-container"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{dropdownRef}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"notification-bell-button"</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsOpen(!isOpen)}&gt;
+        🔔
+        {!connected &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"connection-status"</span> <span class="hljs-attr">title</span>=<span class="hljs-string">"Disconnected"</span>&gt;</span>⚠️<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>}
+        {unreadCount &gt; 0 &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"notification-badge"</span>&gt;</span>{unreadCount}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      {/* ... rest of component */}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+};
+</div></code></pre>
+<p><strong>✅ React + WebSocket Complete!</strong></p>
+<hr>
+<h2 id="vue-implementation">Vue Implementation</h2>
+<h3 id="vue--rest-polling">Vue + REST Polling</h3>
+<p>Perfect for most Vue applications. Checks for new notifications every 15 seconds.</p>
+<h4 id="step-1-create-composable">Step 1: Create Composable</h4>
+<p><strong>File:</strong> <code>src/composables/useNotifications.js</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { ref, onMounted, onUnmounted } <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span>;
+<span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span>;
+
+<span class="hljs-keyword">const</span> API_BASE_URL = <span class="hljs-string">'https://iccare.desmarttrader.com/notification'</span>;
+<span class="hljs-keyword">const</span> POLLING_INTERVAL = <span class="hljs-number">15000</span>; <span class="hljs-comment">// 15 seconds</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useNotifications</span>(<span class="hljs-params">token</span>) </span>{
+  <span class="hljs-keyword">const</span> notifications = ref([]);
+  <span class="hljs-keyword">const</span> unreadCount = ref(<span class="hljs-number">0</span>);
+  <span class="hljs-keyword">const</span> loading = ref(<span class="hljs-literal">false</span>);
+  <span class="hljs-keyword">const</span> error = ref(<span class="hljs-literal">null</span>);
+  <span class="hljs-keyword">let</span> intervalId = <span class="hljs-literal">null</span>;
+
+  <span class="hljs-comment">// Fetch notifications from backend</span>
+  <span class="hljs-keyword">const</span> fetchNotifications = <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">if</span> (!token.value) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">try</span> {
+      loading.value = <span class="hljs-literal">true</span>;
+      <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> axios.get(<span class="hljs-string">`<span class="hljs-subst">${API_BASE_URL}</span>/feed`</span>, {
+        <span class="hljs-attr">headers</span>: { <span class="hljs-attr">Authorization</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">${token.value}</span>`</span> },
+        <span class="hljs-attr">params</span>: {
+          <span class="hljs-attr">limit</span>: <span class="hljs-number">50</span>,
+          <span class="hljs-attr">unread_only</span>: <span class="hljs-literal">false</span>
+        }
+      });
+
+      notifications.value = response.data;
+      unreadCount.value = response.data.filter(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> !n.read).length;
+      error.value = <span class="hljs-literal">null</span>;
+    } <span class="hljs-keyword">catch</span> (err) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to fetch notifications:'</span>, err);
+      error.value = err.response?.data?.detail || err.message;
+    } <span class="hljs-keyword">finally</span> {
+      loading.value = <span class="hljs-literal">false</span>;
+    }
+  };
+
+  <span class="hljs-comment">// Mark notification as read</span>
+  <span class="hljs-keyword">const</span> markAsRead = <span class="hljs-keyword">async</span> (notificationId) =&gt; {
+    <span class="hljs-keyword">if</span> (!token.value) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">await</span> axios.post(
+        <span class="hljs-string">`<span class="hljs-subst">${API_BASE_URL}</span>/feed/<span class="hljs-subst">${notificationId}</span>/mark-read`</span>,
+        {},
+        { <span class="hljs-attr">headers</span>: { <span class="hljs-attr">Authorization</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">${token.value}</span>`</span> } }
+      );
+
+      <span class="hljs-comment">// Update local state optimistically</span>
+      notifications.value = notifications.value.map(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span>
+        n.notification_id === notificationId
+          ? { ...n, <span class="hljs-attr">read</span>: <span class="hljs-literal">true</span> }
+          : n
+      );
+      unreadCount.value = <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">0</span>, unreadCount.value - <span class="hljs-number">1</span>);
+    } <span class="hljs-keyword">catch</span> (err) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to mark as read:'</span>, err);
+    }
+  };
+
+  <span class="hljs-comment">// Mark all as read</span>
+  <span class="hljs-keyword">const</span> markAllAsRead = <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> unreadIds = notifications.value
+      .filter(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> !n.read)
+      .map(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n.notification_id);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> id <span class="hljs-keyword">of</span> unreadIds) {
+      <span class="hljs-keyword">await</span> markAsRead(id);
+    }
+  };
+
+  <span class="hljs-comment">// Set up polling on mount</span>
+  onMounted(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-comment">// Initial fetch</span>
+    fetchNotifications();
+
+    <span class="hljs-comment">// Set up polling interval</span>
+    intervalId = setInterval(fetchNotifications, POLLING_INTERVAL);
+  });
+
+  <span class="hljs-comment">// Clean up on unmount</span>
+  onUnmounted(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (intervalId) {
+      clearInterval(intervalId);
+    }
+  });
+
+  <span class="hljs-keyword">return</span> {
+    notifications,
+    unreadCount,
+    loading,
+    error,
+    markAsRead,
+    markAllAsRead,
+    <span class="hljs-attr">refresh</span>: fetchNotifications
+  };
+}
+</div></code></pre>
+<h4 id="step-2-create-notification-bell-component">Step 2: Create Notification Bell Component</h4>
+<p><strong>File:</strong> <code>src/components/NotificationBell.vue</code></p>
+<pre class="hljs"><code><div>&lt;template&gt;
+  &lt;div class=&quot;notification-bell-container&quot; ref=&quot;dropdownRef&quot;&gt;
+    &lt;button
+      class=&quot;notification-bell-button&quot;
+      @click=&quot;toggleDropdown&quot;
+      aria-label=&quot;Notifications&quot;
+      title=&quot;Notifications&quot;
+    &gt;
+      🔔
+      &lt;span v-if=&quot;unreadCount &gt; 0&quot; class=&quot;notification-badge&quot;&gt;
+        {{ unreadCount &gt; 99 ? '99+' : unreadCount }}
+      &lt;/span&gt;
+    &lt;/button&gt;
+
+    &lt;div v-if=&quot;isOpen&quot; class=&quot;notification-dropdown&quot;&gt;
+      &lt;div class=&quot;notification-header&quot;&gt;
+        &lt;h3&gt;Notifications&lt;/h3&gt;
+        &lt;button
+          v-if=&quot;unreadCount &gt; 0&quot;
+          @click=&quot;markAllAsRead&quot;
+          class=&quot;mark-all-read&quot;
+        &gt;
+          Mark all read
+        &lt;/button&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;notification-list&quot;&gt;
+        &lt;!-- Loading State --&gt;
+        &lt;div v-if=&quot;loading &amp;&amp; notifications.length === 0&quot; class=&quot;notification-loading&quot;&gt;
+          Loading...
+        &lt;/div&gt;
+
+        &lt;!-- Error State --&gt;
+        &lt;div v-if=&quot;error&quot; class=&quot;notification-error&quot;&gt;
+          Failed to load notifications: {{ error }}
+        &lt;/div&gt;
+
+        &lt;!-- Empty State --&gt;
+        &lt;div v-if=&quot;!loading &amp;&amp; notifications.length === 0&quot; class=&quot;no-notifications&quot;&gt;
+          &lt;span class=&quot;no-notifications-icon&quot;&gt;🔕&lt;/span&gt;
+          &lt;p&gt;No notifications&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Notification Items --&gt;
+        &lt;div
+          v-for=&quot;notification in notifications&quot;
+          :key=&quot;notification.notification_id&quot;
+          :class=&quot;[
+            'notification-item',
+            { 'unread': !notification.read },
+            `priority-${notification.priority}`
+          ]&quot;
+          @click=&quot;handleNotificationClick(notification)&quot;
+        &gt;
+          &lt;div class=&quot;notification-icon&quot;&gt;
+            {{ getPriorityIcon(notification.priority) }}
+          &lt;/div&gt;
+          &lt;div class=&quot;notification-content&quot;&gt;
+            &lt;div class=&quot;notification-title&quot;&gt;{{ notification.title }}&lt;/div&gt;
+            &lt;div class=&quot;notification-message&quot;&gt;{{ notification.message }}&lt;/div&gt;
+            &lt;div class=&quot;notification-time&quot;&gt;
+              {{ formatTimestamp(notification.timestamp) }}
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div v-if=&quot;!notification.read&quot; class=&quot;unread-dot&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useNotifications } from '../composables/useNotifications';
+
+const props = defineProps({
+  token: {
+    type: String,
+    required: true
+  }
+});
+
+const isOpen = ref(false);
+const dropdownRef = ref(null);
+
+const tokenRef = computed(() =&gt; props.token);
+const {
+  notifications,
+  unreadCount,
+  loading,
+  error,
+  markAsRead,
+  markAllAsRead
+} = useNotifications(tokenRef);
+
+const toggleDropdown = () =&gt; {
+  isOpen.value = !isOpen.value;
+};
+
+const handleNotificationClick = (notification) =&gt; {
+  markAsRead(notification.notification_id);
+
+  // Navigate to relevant page if action_url exists
+  if (notification.action_url) {
+    window.location.href = notification.action_url;
+  }
+
+  isOpen.value = false;
+};
+
+const getPriorityIcon = (priority) =&gt; {
+  switch (priority) {
+    case 'urgent': return '🚨';
+    case 'high': return '⚠️';
+    case 'normal': return '📢';
+    default: return '📌';
+  }
+};
+
+const formatTimestamp = (timestamp) =&gt; {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diffMs = now - date;
+  const diffMins = Math.floor(diffMs / 60000);
+
+  if (diffMins &lt; 1) return 'Just now';
+  if (diffMins &lt; 60) return `${diffMins}m ago`;
+  if (diffMins &lt; 1440) return `${Math.floor(diffMins / 60)}h ago`;
+  return date.toLocaleDateString();
+};
+
+// Close dropdown when clicking outside
+const handleClickOutside = (event) =&gt; {
+  if (dropdownRef.value &amp;&amp; !dropdownRef.value.contains(event.target)) {
+    isOpen.value = false;
+  }
+};
+
+onMounted(() =&gt; {
+  document.addEventListener('mousedown', handleClickOutside);
+});
+
+onUnmounted(() =&gt; {
+  document.removeEventListener('mousedown', handleClickOutside);
+});
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+/* Use the SAME CSS from React implementation */
+/* Copy the entire CSS from NotificationBell.css above */
+
+/* Container */
+.notification-bell-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Bell Button */
+.notification-bell-button {
+  position: relative;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.notification-bell-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Badge */
+.notification-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #ff4444;
+  color: white;
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: bold;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* Dropdown */
+.notification-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 420px;
+  max-height: 600px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* Header */
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.notification-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.mark-all-read {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.mark-all-read:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Notification List */
+.notification-list {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Notification Item */
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f5f5f5;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.notification-item:hover {
+  background: #f8f9fa;
+}
+
+.notification-item.unread {
+  background: #e3f2fd;
+}
+
+.notification-item.unread:hover {
+  background: #d1e7f9;
+}
+
+/* Priority Colors */
+.notification-item.priority-urgent {
+  border-left: 4px solid #ff0000;
+}
+
+.notification-item.priority-high {
+  border-left: 4px solid #ff9800;
+}
+
+.notification-item.priority-normal {
+  border-left: 4px solid #2196f3;
+}
+
+/* Notification Icon */
+.notification-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Notification Content */
+.notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #333;
+  font-size: 14px;
+}
+
+.notification-message {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.notification-time {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Unread Dot */
+.unread-dot {
+  width: 8px;
+  height: 8px;
+  background: #007bff;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+/* Empty State */
+.no-notifications {
+  padding: 60px 20px;
+  text-align: center;
+  color: #999;
+}
+
+.no-notifications-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* Loading &amp; Error States */
+.notification-loading {
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+}
+
+.notification-error {
+  padding: 20px;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  margin: 12px;
+  color: #856404;
+  font-size: 14px;
+}
+&lt;/style&gt;
+</div></code></pre>
+<h4 id="step-3-use-in-your-app">Step 3: Use in Your App</h4>
+<p><strong>File:</strong> <code>src/App.vue</code></p>
+<pre class="hljs"><code><div>&lt;template&gt;
+  &lt;div class=&quot;app&quot;&gt;
+    &lt;header class=&quot;app-header&quot;&gt;
+      &lt;h1&gt;iCCaRE System&lt;/h1&gt;
+      &lt;nav&gt;
+        &lt;!-- Your navigation items --&gt;
+        &lt;NotificationBell :token=&quot;token&quot; /&gt;
+      &lt;/nav&gt;
+    &lt;/header&gt;
+    &lt;!-- Rest of your app --&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref, onMounted } from 'vue';
+import NotificationBell from './components/NotificationBell.vue';
+
+const token = ref('');
+
+onMounted(() =&gt; {
+  // Get token from localStorage or your auth store
+  token.value = localStorage.getItem('access_token') || '';
+});
+&lt;/script&gt;
+</div></code></pre>
+<p><strong>✅ Vue + REST Polling Complete!</strong></p>
+<hr>
+<h3 id="vue--websocket">Vue + WebSocket</h3>
+<p>For real-time notifications in Vue.</p>
+<h4 id="step-1-create-websocket-composable">Step 1: Create WebSocket Composable</h4>
+<p><strong>File:</strong> <code>src/composables/useNotifications.js</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { ref, onMounted, onUnmounted } <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span>;
+<span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span>;
+
+<span class="hljs-keyword">const</span> API_BASE_URL = <span class="hljs-string">'https://iccare.desmarttrader.com/notification'</span>;
+<span class="hljs-keyword">const</span> WS_URL = <span class="hljs-string">'wss://iccare.desmarttrader.com/notification/ws'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useNotifications</span>(<span class="hljs-params">token</span>) </span>{
+  <span class="hljs-keyword">const</span> notifications = ref([]);
+  <span class="hljs-keyword">const</span> unreadCount = ref(<span class="hljs-number">0</span>);
+  <span class="hljs-keyword">const</span> connected = ref(<span class="hljs-literal">false</span>);
+  <span class="hljs-keyword">let</span> websocket = <span class="hljs-literal">null</span>;
+  <span class="hljs-keyword">let</span> reconnectTimeout = <span class="hljs-literal">null</span>;
+
+  <span class="hljs-comment">// Fetch initial notifications from REST API</span>
+  <span class="hljs-keyword">const</span> fetchNotifications = <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">if</span> (!token.value) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> axios.get(<span class="hljs-string">`<span class="hljs-subst">${API_BASE_URL}</span>/feed`</span>, {
+        <span class="hljs-attr">headers</span>: { <span class="hljs-attr">Authorization</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">${token.value}</span>`</span> },
+        <span class="hljs-attr">params</span>: { <span class="hljs-attr">limit</span>: <span class="hljs-number">50</span> }
+      });
+
+      notifications.value = response.data;
+      unreadCount.value = response.data.filter(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> !n.read).length;
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to fetch notifications:'</span>, error);
+    }
+  };
+
+  <span class="hljs-comment">// Mark notification as read</span>
+  <span class="hljs-keyword">const</span> markAsRead = <span class="hljs-keyword">async</span> (notificationId) =&gt; {
+    <span class="hljs-keyword">if</span> (!token.value) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">await</span> axios.post(
+        <span class="hljs-string">`<span class="hljs-subst">${API_BASE_URL}</span>/feed/<span class="hljs-subst">${notificationId}</span>/mark-read`</span>,
+        {},
+        { <span class="hljs-attr">headers</span>: { <span class="hljs-attr">Authorization</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">${token.value}</span>`</span> } }
+      );
+
+      notifications.value = notifications.value.map(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span>
+        n.notification_id === notificationId ? { ...n, <span class="hljs-attr">read</span>: <span class="hljs-literal">true</span> } : n
+      );
+      unreadCount.value = <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">0</span>, unreadCount.value - <span class="hljs-number">1</span>);
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to mark as read:'</span>, error);
+    }
+  };
+
+  <span class="hljs-comment">// Mark all as read</span>
+  <span class="hljs-keyword">const</span> markAllAsRead = <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> unreadIds = notifications.value
+      .filter(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> !n.read)
+      .map(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n.notification_id);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> id <span class="hljs-keyword">of</span> unreadIds) {
+      <span class="hljs-keyword">await</span> markAsRead(id);
+    }
+  };
+
+  <span class="hljs-comment">// Setup WebSocket connection</span>
+  <span class="hljs-keyword">const</span> connectWebSocket = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (!token.value) <span class="hljs-keyword">return</span>;
+
+    websocket = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">`<span class="hljs-subst">${WS_URL}</span>?token=<span class="hljs-subst">${token.value}</span>`</span>);
+
+    websocket.onopen = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'✅ WebSocket connected'</span>);
+      connected.value = <span class="hljs-literal">true</span>;
+    };
+
+    websocket.onmessage = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+      <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">const</span> notification = <span class="hljs-built_in">JSON</span>.parse(event.data);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'📬 New notification received:'</span>, notification);
+
+        <span class="hljs-comment">// Add to notifications list at the top</span>
+        notifications.value = [notification, ...notifications.value];
+        unreadCount.value = unreadCount.value + <span class="hljs-number">1</span>;
+
+        <span class="hljs-comment">// Show browser notification</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-string">'Notification'</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">window</span> &amp;&amp; Notification.permission === <span class="hljs-string">'granted'</span>) {
+          <span class="hljs-keyword">new</span> Notification(notification.title, {
+            <span class="hljs-attr">body</span>: notification.message,
+            <span class="hljs-attr">icon</span>: <span class="hljs-string">'/notification-icon.png'</span>,
+            <span class="hljs-attr">tag</span>: notification.notification_id
+          });
+        }
+
+        <span class="hljs-comment">// Play sound (optional)</span>
+        <span class="hljs-keyword">const</span> audio = <span class="hljs-keyword">new</span> Audio(<span class="hljs-string">'/notification-sound.mp3'</span>);
+        audio.play().catch(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Audio play failed:'</span>, e));
+      } <span class="hljs-keyword">catch</span> (error) {
+        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to parse notification:'</span>, error);
+      }
+    };
+
+    websocket.onerror = <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'❌ WebSocket error:'</span>, error);
+      connected.value = <span class="hljs-literal">false</span>;
+    };
+
+    websocket.onclose = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'🔌 WebSocket disconnected:'</span>, event.code, event.reason);
+      connected.value = <span class="hljs-literal">false</span>;
+
+      <span class="hljs-comment">// Attempt to reconnect after 5 seconds</span>
+      reconnectTimeout = setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'🔄 Attempting to reconnect...'</span>);
+        connectWebSocket();
+      }, <span class="hljs-number">5000</span>);
+    };
+  };
+
+  <span class="hljs-comment">// On mount</span>
+  onMounted(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-comment">// Initial fetch</span>
+    fetchNotifications();
+
+    <span class="hljs-comment">// Connect WebSocket</span>
+    connectWebSocket();
+  });
+
+  <span class="hljs-comment">// On unmount</span>
+  onUnmounted(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (websocket &amp;&amp; websocket.readyState === WebSocket.OPEN) {
+      websocket.close();
+    }
+    <span class="hljs-keyword">if</span> (reconnectTimeout) {
+      clearTimeout(reconnectTimeout);
+    }
+  });
+
+  <span class="hljs-keyword">return</span> {
+    notifications,
+    unreadCount,
+    connected,
+    markAsRead,
+    markAllAsRead,
+    <span class="hljs-attr">refresh</span>: fetchNotifications
+  };
+}
+</div></code></pre>
+<h4 id="step-2-request-browser-notifications">Step 2: Request Browser Notifications</h4>
+<p><strong>File:</strong> <code>src/main.js</code> or <code>src/App.vue</code></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Request notification permission on app load</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-string">'Notification'</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">window</span> &amp;&amp; Notification.permission === <span class="hljs-string">'default'</span>) {
+  Notification.requestPermission().then(<span class="hljs-function"><span class="hljs-params">permission</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Notification permission:'</span>, permission);
+  });
+}
+</div></code></pre>
+<h4 id="step-3-use-the-same-component">Step 3: Use the Same Component</h4>
+<p>The NotificationBell.vue component is <strong>exactly the same</strong> as the REST version! The composable handles the difference.</p>
+<p><strong>Optional:</strong> Show connection status indicator in the component template:</p>
+<pre class="hljs"><code><div>&lt;template&gt;
+  &lt;div class=&quot;notification-bell-container&quot;&gt;
+    &lt;button class=&quot;notification-bell-button&quot; @click=&quot;toggleDropdown&quot;&gt;
+      🔔
+      &lt;span v-if=&quot;!connected&quot; class=&quot;connection-status&quot; title=&quot;Disconnected&quot;&gt;⚠️&lt;/span&gt;
+      &lt;span v-if=&quot;unreadCount &gt; 0&quot; class=&quot;notification-badge&quot;&gt;{{ unreadCount }}&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;!-- ... rest of template --&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+// Update to include connected status
+const { notifications, unreadCount, connected, markAsRead, markAllAsRead } = useNotifications(tokenRef);
+&lt;/script&gt;
+</div></code></pre>
+<p><strong>✅ Vue + WebSocket Complete!</strong></p>
+<hr>
+<h2 id="backend-api-reference">Backend API Reference</h2>
+<h3 id="authentication">Authentication</h3>
+<p>All API requests require a JWT token in the Authorization header:</p>
+<pre class="hljs"><code><div>headers: {
+  <span class="hljs-string">'Authorization'</span>: <span class="hljs-string">'Bearer YOUR_JWT_TOKEN_HERE'</span>
+}
+</div></code></pre>
+<h3 id="endpoints">Endpoints</h3>
+<h4 id="1-get-notification-feed">1. Get Notification Feed</h4>
+<pre class="hljs"><code><div><span class="hljs-attribute">GET /notification/feed
+</span></div></code></pre>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>limit</code> (optional): Number of notifications to return (default: 50, max: 100)</li>
+<li><code>offset</code> (optional): Pagination offset (default: 0)</li>
+<li><code>unread_only</code> (optional): Return only unread notifications (default: false)</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>[
+  {
+    <span class="hljs-attr">"notification_id"</span>: <span class="hljs-string">"uuid"</span>,
+    <span class="hljs-attr">"notification_type"</span>: <span class="hljs-string">"sample_registered"</span>,
+    <span class="hljs-attr">"title"</span>: <span class="hljs-string">"New Sample Registered"</span>,
+    <span class="hljs-attr">"message"</span>: <span class="hljs-string">"New blood sample SAMPLE_001 has been registered"</span>,
+    <span class="hljs-attr">"timestamp"</span>: <span class="hljs-string">"2025-12-27T10:00:00"</span>,
+    <span class="hljs-attr">"read"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"priority"</span>: <span class="hljs-string">"normal"</span>,
+    <span class="hljs-attr">"action_url"</span>: <span class="hljs-string">"/samples/SAMPLE_001"</span>
+  }
+]
+</div></code></pre>
+<h4 id="2-mark-notification-as-read">2. Mark Notification as Read</h4>
+<pre class="hljs"><code><div><span class="hljs-attribute">POST /notification/feed/{notification_id}/mark-read
+</span></div></code></pre>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"status"</span>: <span class="hljs-string">"success"</span>,
+  <span class="hljs-attr">"notification_id"</span>: <span class="hljs-string">"uuid"</span>
+}
+</div></code></pre>
+<h4 id="3-websocket-connection">3. WebSocket Connection</h4>
+<pre class="hljs"><code><div>wss:<span class="hljs-comment">//iccare.desmarttrader.com/notification/ws?token=YOUR_JWT_TOKEN</span>
+</div></code></pre>
+<p><strong>Message Format (Received):</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"notification_id"</span>: <span class="hljs-string">"uuid"</span>,
+  <span class="hljs-attr">"notification_type"</span>: <span class="hljs-string">"sample_registered"</span>,
+  <span class="hljs-attr">"title"</span>: <span class="hljs-string">"New Sample Registered"</span>,
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"New blood sample SAMPLE_001 has been registered"</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-string">"2025-12-27T10:00:00"</span>,
+  <span class="hljs-attr">"priority"</span>: <span class="hljs-string">"normal"</span>
+}
+</div></code></pre>
+<hr>
+<h2 id="testing">Testing</h2>
+<h3 id="test-rest-polling">Test REST Polling</h3>
+<p><strong>1. Open your app in the browser</strong>
+<strong>2. Open DevTools Console</strong>
+<strong>3. Trigger a sample event (register a sample)</strong>
+<strong>4. Wait 15 seconds</strong>
+<strong>5. You should see the notification appear</strong></p>
+<h3 id="test-websocket">Test WebSocket</h3>
+<p><strong>1. Open your app</strong>
+<strong>2. Open DevTools Console - you should see:</strong></p>
+<pre class="hljs"><code><div>✅ WebSocket connected
+</div></code></pre>
+<p><strong>3. Trigger a sample event</strong>
+<strong>4. You should see immediately:</strong></p>
+<pre class="hljs"><code><div>📬 New notification received: {...}
+</div></code></pre>
+<h3 id="test-with-curl">Test with curl</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Get token</span>
+response=$(curl -s -X POST https://iccare.desmarttrader.com/auth/signin \
+  -H <span class="hljs-string">"Content-Type: application/json"</span> \
+  -d <span class="hljs-string">'{
+    "email": "admin5@iccare.com",
+    "password": "AdminSecurePass123!"
+  }'</span>)
+
+token=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$response</span> | jq -r <span class="hljs-string">'.access_token'</span>)
+
+<span class="hljs-comment"># Get notifications</span>
+curl https://iccare.desmarttrader.com/notification/feed \
+  -H <span class="hljs-string">"Authorization: Bearer <span class="hljs-variable">$token</span>"</span> | jq
+
+<span class="hljs-comment"># Send test notification</span>
+curl -X POST https://iccare.desmarttrader.com/notification/send \
+  -H <span class="hljs-string">"Authorization: Bearer <span class="hljs-variable">$token</span>"</span> \
+  -H <span class="hljs-string">"Content-Type: application/json"</span> \
+  -d <span class="hljs-string">'{
+    "notification_type": "test_notification",
+    "content": {"message": "Testing from curl"},
+    "recipients": ["your-email@example.com"]
+  }'</span> | jq
+</div></code></pre>
+<hr>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="notifications-not-appearing">Notifications not appearing</h3>
+<p><strong>Polling:</strong></p>
+<ul>
+<li>Check browser console for errors</li>
+<li>Verify token is valid: <code>console.log(token)</code></li>
+<li>Check network tab - you should see GET requests every 15 seconds</li>
+<li>Verify backend is reachable: <code>curl https://iccare.desmarttrader.com/notification/feed</code></li>
+</ul>
+<p><strong>WebSocket:</strong></p>
+<ul>
+<li>Check browser console for &quot;WebSocket connected&quot; message</li>
+<li>If you see &quot;WebSocket disconnected&quot;, check Nginx configuration</li>
+<li>Verify WebSocket URL is correct (wss:// not ws:// for HTTPS)</li>
+<li>Check backend logs for WebSocket errors</li>
+</ul>
+<h3 id="cors-errors">CORS errors</h3>
+<p>Add CORS headers to your backend:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># In notification_mng/main.py</span>
+<span class="hljs-keyword">from</span> fastapi.middleware.cors <span class="hljs-keyword">import</span> CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[<span class="hljs-string">"http://localhost:3000"</span>, <span class="hljs-string">"https://your-frontend-domain.com"</span>],
+    allow_credentials=<span class="hljs-literal">True</span>,
+    allow_methods=[<span class="hljs-string">"*"</span>],
+    allow_headers=[<span class="hljs-string">"*"</span>],
+)
+</div></code></pre>
+<h3 id="websocket-connection-fails">WebSocket connection fails</h3>
+<p><strong>Check Nginx configuration:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-attribute">location</span> /notification/ {
+    <span class="hljs-attribute">proxy_pass</span> http://127.0.0.1:8084/;
+
+    <span class="hljs-comment"># WebSocket support</span>
+    <span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;
+    <span class="hljs-attribute">proxy_set_header</span> Upgrade <span class="hljs-variable">$http_upgrade</span>;
+    <span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">"upgrade"</span>;
+
+    <span class="hljs-comment"># Other headers</span>
+    <span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;
+    <span class="hljs-attribute">proxy_set_header</span> X-Real-IP <span class="hljs-variable">$remote_addr</span>;
+}
+</div></code></pre>
+<h3 id="browser-notifications-not-showing">Browser notifications not showing</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Check permission status</span>
+<span class="hljs-built_in">console</span>.log(Notification.permission); <span class="hljs-comment">// should be "granted"</span>
+
+<span class="hljs-comment">// Request permission</span>
+Notification.requestPermission().then(<span class="hljs-function"><span class="hljs-params">permission</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(permission);
+});
+</div></code></pre>
+<h3 id="polling-is-too-slowfast">Polling is too slow/fast</h3>
+<p>Change the interval:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// In useNotifications hook</span>
+<span class="hljs-keyword">const</span> POLLING_INTERVAL = <span class="hljs-number">10000</span>; <span class="hljs-comment">// 10 seconds (faster)</span>
+<span class="hljs-comment">// or</span>
+<span class="hljs-keyword">const</span> POLLING_INTERVAL = <span class="hljs-number">30000</span>; <span class="hljs-comment">// 30 seconds (slower)</span>
+</div></code></pre>
+<hr>
+<h2 id="performance-tips">Performance Tips</h2>
+<h3 id="rest-polling">REST Polling</h3>
+<p>✅ <strong>DO:</strong></p>
+<ul>
+<li>Set polling interval based on your needs (15-30 seconds is good)</li>
+<li>Implement exponential backoff on errors</li>
+<li>Cancel requests on component unmount</li>
+<li>Use <code>unread_only=true</code> to reduce payload size</li>
+</ul>
+<p>❌ <strong>DON'T:</strong></p>
+<ul>
+<li>Poll faster than 5 seconds (too much server load)</li>
+<li>Forget to clear intervals on unmount (memory leak)</li>
+<li>Make multiple simultaneous requests</li>
+</ul>
+<h3 id="websocket">WebSocket</h3>
+<p>✅ <strong>DO:</strong></p>
+<ul>
+<li>Implement reconnection logic (included in examples)</li>
+<li>Close connection on logout</li>
+<li>Handle connection errors gracefully</li>
+<li>Use heartbeat/ping-pong to keep connection alive</li>
+</ul>
+<p>❌ <strong>DON'T:</strong></p>
+<ul>
+<li>Create multiple WebSocket connections</li>
+<li>Forget to close connection on unmount</li>
+<li>Ignore connection errors</li>
+</ul>
+<hr>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong><a href="./NOTIFICATION_API_REFERENCE.md">NOTIFICATION_API_REFERENCE.md</a></strong> - Complete backend API documentation</li>
+<li><strong><a href="./NOTIFICATION_DELIVERY_IMPLEMENTATION_GUIDE.md">NOTIFICATION_DELIVERY_IMPLEMENTATION_GUIDE.md</a></strong> - Full system implementation guide</li>
+<li><strong><a href="./NOTIFICATION_STRATEGY_ANALYSIS.md">NOTIFICATION_STRATEGY_ANALYSIS.md</a></strong> - Architecture and strategy analysis</li>
+</ul>
+<hr>
+<p><strong>Document Version:</strong> 1.0
+<strong>Last Updated:</strong> 2025-12-27
+<strong>Author:</strong> Claude (AI Frontend Implementation Guide)</p>
+
+</body>
+</html>

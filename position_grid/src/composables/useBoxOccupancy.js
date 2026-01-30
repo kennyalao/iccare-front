@@ -1,7 +1,7 @@
 // src/composables/useBoxOccupancy.js
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onUnmounted } from 'vue'
 
-export function useBoxOccupancy(boxIdRef) {
+export function useBoxOccupancy(boxIdRef, siteIdRef, freezerIdRef, rackIdRef, autoRefreshInterval = 600000) {
   const loading = ref(true)
   const error = ref(null)
 
@@ -12,6 +12,8 @@ export function useBoxOccupancy(boxIdRef) {
   const occupiedPositions = ref({})
 
   const API_BASE = 'https://iccare.desmarttrader.com/biospecimen/attributes'
+
+  let refreshTimer = null
 
   /**
    * Helpers
@@ -43,22 +45,31 @@ export function useBoxOccupancy(boxIdRef) {
   /**
    * Fetch occupancy
    */
-  const load = async () => {
+  const load = async (isBackgroundRefresh = false) => {
     if (!boxIdRef.value) return
 
     try {
-      loading.value = true
+      // Only show loading spinner on initial load, not background refreshes
+      if (!isBackgroundRefresh) {
+        loading.value = true
+      }
       error.value = null
 
-      const res = await fetch(
-        `${API_BASE}/boxes/${boxIdRef.value}/occupancy`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('access_token') || ''}`
-          }
+      // Build query parameters
+      const params = new URLSearchParams()
+      if (siteIdRef?.value) params.append('site_id', siteIdRef.value)
+      if (freezerIdRef?.value) params.append('freezer_id', freezerIdRef.value)
+      if (rackIdRef?.value) params.append('rack_id', rackIdRef.value)
+
+      const queryString = params.toString()
+      const url = `${API_BASE}/boxes/${boxIdRef.value}/occupancy${queryString ? `?${queryString}` : ''}`
+
+      const res = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('access_token') || ''}`
         }
-      )
+      })
 
       if (!res.ok) {
         throw new Error(`HTTP ${res.status}`)
@@ -76,14 +87,51 @@ export function useBoxOccupancy(boxIdRef) {
       console.error(e)
       error.value = 'Failed to load box occupancy'
     } finally {
-      loading.value = false
+      if (!isBackgroundRefresh) {
+        loading.value = false
+      }
     }
   }
 
   /**
-   * Auto-refresh when boxId changes
+   * Start auto-refresh
    */
-  watch(boxIdRef, load, { immediate: true })
+  const startAutoRefresh = () => {
+    if (refreshTimer) {
+      clearInterval(refreshTimer)
+    }
+    if (autoRefreshInterval > 0) {
+      refreshTimer = setInterval(() => {
+        load(true) // Background refresh - won't show loading spinner
+      }, autoRefreshInterval)
+    }
+  }
+
+  /**
+   * Stop auto-refresh
+   */
+  const stopAutoRefresh = () => {
+    if (refreshTimer) {
+      clearInterval(refreshTimer)
+      refreshTimer = null
+    }
+  }
+
+  /**
+   * Auto-refresh when boxId or storage location changes
+   */
+  watch([boxIdRef, siteIdRef, freezerIdRef, rackIdRef], async () => {
+    stopAutoRefresh()
+    await load()
+    startAutoRefresh()
+  }, { immediate: true })
+
+  /**
+   * Cleanup on unmount
+   */
+  onUnmounted(() => {
+    stopAutoRefresh()
+  })
 
   return {
     // state
@@ -99,6 +147,8 @@ export function useBoxOccupancy(boxIdRef) {
     gridRows,
 
     // actions
-    reload: load
+    reload: load,
+    startAutoRefresh,
+    stopAutoRefresh
   }
 }

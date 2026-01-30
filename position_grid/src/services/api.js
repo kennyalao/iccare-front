@@ -47,9 +47,21 @@ export const registerSample = async (sampleData) => {
 
 /**
  * Get box occupancy data
+ * @param {string} boxId - Box identifier
+ * @param {string} siteId - Site identifier (recommended)
+ * @param {string} freezerId - Freezer identifier (recommended)
+ * @param {string} rackId - Rack identifier (recommended)
  */
-export const getBoxOccupancy = async (boxId) => {
-  return apiRequest(`/attributes/boxes/${boxId}/occupancy`)
+export const getBoxOccupancy = async (boxId, siteId, freezerId, rackId) => {
+  const params = new URLSearchParams()
+  if (siteId) params.append('site_id', siteId)
+  if (freezerId) params.append('freezer_id', freezerId)
+  if (rackId) params.append('rack_id', rackId)
+
+  const queryString = params.toString()
+  const endpoint = `/attributes/boxes/${boxId}/occupancy${queryString ? `?${queryString}` : ''}`
+
+  return apiRequest(endpoint)
 }
 
 /**

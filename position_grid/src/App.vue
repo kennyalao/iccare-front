@@ -1,16 +1,29 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import PositionGrid from '@/components/PositionGrid.vue'
 import LoginPrompt from '@/components/LoginPrompt.vue'
+import NotificationBell from '@/components/NotificationBell.vue'
 import { useBoxOccupancy } from '@/composables/useBoxOccupancy'
-import { registerSample } from '@/services/api'
+import { registerSample, getSites, getFreezers, getRacks, getBoxes } from '@/services/api'
+
+// Storage hierarchy state
+const sites = ref([])
+const freezers = ref([])
+const racks = ref([])
+const boxes = ref([])
 
 // Form state
 const boxId = ref('BOX_001')
 const selectedPosition = ref(null)
-const siteId = ref('SITE01')
-const freezerId = ref('FRZ01')
-const rackId = ref('RACK01')
+const siteId = ref('SITE_001')
+const freezerId = ref('FRZ_001')
+const rackId = ref('RACK_001')
+
+// Loading states
+const loadingSites = ref(false)
+const loadingFreezers = ref(false)
+const loadingRacks = ref(false)
+const loadingBoxes = ref(false)
 
 // Sample form fields
 const sampleForm = ref({
@@ -28,8 +41,126 @@ const submitting = ref(false)
 const submitError = ref(null)
 const submitSuccess = ref(false)
 
-// Get reload function from composable
-const { reload, columns } = useBoxOccupancy(boxId)
+// Reference to PositionGrid component
+const positionGridRef = ref(null)
+
+// Authentication token for notifications
+const accessToken = ref('')
+
+// Get columns from composable for position calculation
+const { columns } = useBoxOccupancy(boxId, siteId, freezerId, rackId)
+
+// Load storage hierarchy data
+const loadSites = async () => {
+  try {
+    loadingSites.value = true
+    const data = await getSites()
+    console.log('Sites API response:', data)
+    // Handle both array and object with 'sites' property
+    sites.value = Array.isArray(data) ? data : (data.sites || [])
+  } catch (error) {
+    console.error('Failed to load sites:', error)
+  } finally {
+    loadingSites.value = false
+  }
+}
+
+const loadFreezers = async () => {
+  if (!siteId.value) {
+    freezers.value = []
+    return
+  }
+  try {
+    loadingFreezers.value = true
+    const data = await getFreezers(siteId.value)
+    console.log('Freezers API response:', data)
+    freezers.value = Array.isArray(data) ? data : (data.freezers || [])
+  } catch (error) {
+    console.error('Failed to load freezers:', error)
+    freezers.value = []
+  } finally {
+    loadingFreezers.value = false
+  }
+}
+
+const loadRacks = async () => {
+  if (!freezerId.value) {
+    racks.value = []
+    return
+  }
+  try {
+    loadingRacks.value = true
+    const data = await getRacks(freezerId.value)
+    console.log('Racks API response:', data)
+    racks.value = Array.isArray(data) ? data : (data.racks || [])
+  } catch (error) {
+    console.error('Failed to load racks:', error)
+    racks.value = []
+  } finally {
+    loadingRacks.value = false
+  }
+}
+
+const loadBoxes = async () => {
+  if (!rackId.value) {
+    boxes.value = []
+    return
+  }
+  try {
+    loadingBoxes.value = true
+    const data = await getBoxes(rackId.value)
+    console.log('Boxes API response:', data)
+    boxes.value = Array.isArray(data) ? data : (data.boxes || [])
+  } catch (error) {
+    console.error('Failed to load boxes:', error)
+    boxes.value = []
+  } finally {
+    loadingBoxes.value = false
+  }
+}
+
+// Watch for changes in the hierarchy and cascade down
+watch(siteId, async (newSiteId) => {
+  freezerId.value = ''
+  rackId.value = ''
+  boxId.value = ''
+  if (newSiteId) {
+    await loadFreezers()
+  }
+})
+
+watch(freezerId, async (newFreezerId) => {
+  rackId.value = ''
+  boxId.value = ''
+  if (newFreezerId) {
+    await loadRacks()
+  }
+})
+
+watch(rackId, async (newRackId) => {
+  boxId.value = ''
+  if (newRackId) {
+    await loadBoxes()
+  }
+})
+
+// Load initial sites on mount
+onMounted(async () => {
+  // Get authentication token from localStorage
+  accessToken.value = localStorage.getItem('access_token') || ''
+
+  await loadSites()
+  // Load the rest of the hierarchy based on initial values
+  if (siteId.value) {
+    await loadFreezers()
+    if (freezerId.value) {
+      await loadRacks()
+      if (rackId.value) {
+        await loadBoxes()
+      }
+    }
+  }
+})
 
 // Convert position label (e.g., "A5") to index
 const getPositionIndex = (positionLabel, cols) => {
@@ -109,7 +240,9 @@ const submitSample = async () => {
     }
 
     // Reload grid to show updated occupancy
-    await reload()
+    if (positionGridRef.value?.reload) {
+      await positionGridRef.value.reload(false)
+    }
 
     // Clear success message after 3 seconds
     setTimeout(() => {
@@ -127,10 +260,85 @@ const submitSample = async () => {
 <template>
   <div class="min-h-screen bg-gray-50 p-4 md:p-8">
     <div class="max-w-6xl mx-auto">
-      <h1 class="text-2xl font-bold text-gray-900 mb-6">Sample Registration</h1>
+      <!-- Header with Notification Bell -->
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-lg font-semibold text-gray-900">Sample Box Selection</h1>
+        <NotificationBell v-if="accessToken" :token="accessToken" />
+      </div>
 
       <!-- Authentication Status -->
       <LoginPrompt />
+
+      <!-- Storage Hierarchy Selectors -->
+      <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 class="text-lg font-semibold mb-4">Select Storage Location</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <!-- Site Selector -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Site *</label>
+            <select
+              v-model="siteId"
+              :disabled="loadingSites"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="">{{ loadingSites ? 'Loading...' : 'Select Site' }}</option>
+              <option v-for="site in sites" :key="site.site_id" :value="site.site_id">
+                {{ site.site_name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Freezer Selector -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Freezer *</label>
+            <select
+              v-model="freezerId"
+              :disabled="!siteId || loadingFreezers"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="">{{ loadingFreezers ? 'Loading...' : 'Select Freezer' }}</option>
+              <option v-for="freezer in freezers" :key="freezer.freezer_id" :value="freezer.freezer_id">
+                {{ freezer.freezer_name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Rack Selector -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Rack *</label>
+            <select
+              v-model="rackId"
+              :disabled="!freezerId || loadingRacks"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="">{{ loadingRacks ? 'Loading...' : 'Select Rack' }}</option>
+              <option v-for="rack in racks" :key="rack.rack_id" :value="rack.rack_id">
+                {{ rack.rack_name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Box Selector -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Box *</label>
+            <select
+              v-model="boxId"
+              :disabled="!rackId || loadingBoxes"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="">{{ loadingBoxes ? 'Loading...' : 'Select Box' }}</option>
+              <option v-for="box in boxes" :key="box.box_id" :value="box.box_id">
+                {{ box.box_name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
 
       <div class="grid md:grid-cols-2 gap-6">
         <!-- Position Grid -->
@@ -138,7 +346,11 @@ const submitSample = async () => {
           <h2 class="text-lg font-semibold mb-4">Select Storage Position</h2>
 
           <PositionGrid
+            ref="positionGridRef"
             :boxId="boxId"
+            :siteId="siteId"
+            :freezerId="freezerId"
+            :rackId="rackId"
             @select="handleSelect"
           />
 
